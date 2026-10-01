@@ -1,0 +1,72 @@
+REQUEST 402459d0
+FUNCTION 402459d0 at_ciowrite_set __call0
+
+/* Extension table at flash 0x66e18; parses requested pin and level, calls generic GPIO writer. */
+
+void __call0 at_ciowrite_set(undefined4 param_1,int param_2)
+
+{
+  char cVar1;
+  uint uVar2;
+  int iVar3;
+  undefined *puVar4;
+  
+  param_2 = param_2 + 1;
+  uVar2 = (*(code *)PTR_FUN_402381b8)(param_2);
+  uVar2 = uVar2 & 0xff;
+  iVar3 = extension_gpio_valid(uVar2);
+  puVar4 = PTR_s_Invalid_GPIO_40245978;
+  if ((iVar3 == 0) ||
+     (iVar3 = (*(code *)PTR_FUN_40244e3c)(param_2,0x2c), puVar4 = PTR_s_Miss_param_40245974,
+     iVar3 == 0)) {
+    FUN_402358f0(puVar4);
+    FUN_4022d7d4();
+  }
+  else {
+    cVar1 = (*(code *)PTR_FUN_402381b8)(iVar3 + 1);
+    extension_gpio_write(uVar2,(uint)(cVar1 != '\0'));
+    FUN_4022d7b8();
+  }
+  return;
+}
+
+
+ASSEMBLY
+402459d0  addi a1,a1,-0x10
+402459d3  s32i.n a13,a1,0x4
+402459d5  addi.n a13,a3,0x1
+402459d7  mov.n a2,a13
+402459d9  s32i.n a12,a1,0x8
+402459db  s32i a0,a1,0xc
+402459de  l32r a0,0x402381b8 ; READ 402381b8
+402459e1  callx0 a0 ; COMPUTED_CALL 40106c2c
+402459e4  extui a12,a2,0x0,0x8
+402459e7  mov.n a2,a12
+402459e9  call0 0x402455a0 ; UNCONDITIONAL_CALL 402455a0
+402459ec  beqz.n a2,0x40245a21 ; CONDITIONAL_JUMP 40245a21
+402459ee  mov.n a2,a13
+402459f0  movi.n a3,0x2c
+402459f2  l32r a0,0x40244e3c ; READ 40244e3c
+402459f5  callx0 a0 ; COMPUTED_CALL 40106c74
+402459f8  bnez.n a2,0x40245a01 ; CONDITIONAL_JUMP 40245a01
+402459fa  l32r a2,0x40245974 ; READ 40245974 ; PARAM 3ffe9f7c
+402459fd  j 0x40245a24 ; UNCONDITIONAL_JUMP 40245a24
+40245a01  addi a2,a2,0x1
+40245a04  l32r a0,0x402381b8 ; READ 402381b8
+40245a07  callx0 a0 ; COMPUTED_CALL 40106c2c
+40245a0a  movi a4,0x1
+40245a0d  extui a2,a2,0x0,0x8
+40245a10  movi a3,0x0
+40245a13  movnez a3,a4,a2
+40245a16  mov.n a2,a12
+40245a18  call0 0x402455fc ; UNCONDITIONAL_CALL 402455fc
+40245a1b  call0 0x4022d7b8 ; UNCONDITIONAL_CALL 4022d7b8
+40245a1e  j 0x40245a2a ; UNCONDITIONAL_JUMP 40245a2a
+40245a21  l32r a2,0x40245978 ; READ 40245978 ; PARAM 3ffeb0c0
+40245a24  call0 0x402358f0 ; UNCONDITIONAL_CALL 402358f0
+40245a27  call0 0x4022d7d4 ; UNCONDITIONAL_CALL 4022d7d4
+40245a2a  l32i a0,a1,0xc
+40245a2d  l32i a12,a1,0x8
+40245a30  l32i.n a13,a1,0x4
+40245a32  addi a1,a1,0x10
+40245a35  ret.n

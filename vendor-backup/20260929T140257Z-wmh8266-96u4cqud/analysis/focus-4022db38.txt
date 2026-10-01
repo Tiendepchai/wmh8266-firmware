@@ -1,0 +1,66 @@
+REQUEST 4022db38
+XREF 402329bf UNCONDITIONAL_CALL
+FUNCTION 4022db38 FUN_4022db38 __call0
+CALLER 402329bf UNCONDITIONAL_CALL
+
+void __call0 FUN_4022db38(void)
+
+{
+  undefined *puVar1;
+  uint uVar2;
+  int iVar3;
+  
+  puVar1 = PTR_s_at_ipCmd_c_4022db2c;
+  uVar2 = (uint)(byte)*PTR_DAT_4022db34;
+  if ((byte)*PTR_DAT_4022db30 != 0) {
+    uVar2 = (uint)(byte)*PTR_DAT_4022db30;
+  }
+  *PTR_DAT_4022db34 = (char)uVar2;
+  iVar3 = (*(code *)PTR_FUN_402015c4)(uVar2 << 6,puVar1,0xd1);
+  *(int *)(PTR_DAT_4022db30 + 4) = iVar3;
+  if (iVar3 == 0) {
+    FUN_402020d4();
+  }
+  FUN_40235e80(*PTR_DAT_4022db34);
+  FUN_40226a90(*PTR_DAT_4022db34);
+  FUN_40226ae0(3);
+  FUN_40226ab8(3);
+  FUN_40202eb8(5);
+  return;
+}
+
+
+ASSEMBLY
+4022db38  l32r a3,0x4022db2c ; READ 4022db2c ; PARAM 4025cac0
+4022db3b  movi a4,0xd1
+4022db3e  addi a1,a1,-0x10
+4022db41  l32r a6,0x4022db30 ; READ 4022db30
+4022db44  l32r a5,0x4022db34 ; READ 4022db34 ; PARAM 3ffe8374
+4022db47  l8ui a6,a6,0x0 ; READ 3fff1cf0
+4022db4a  l8ui a2,a5,0x0 ; READ 3ffe8374
+4022db4d  s32i a0,a1,0x0 ; DATA Stack[-0x10]
+4022db50  movnez a2,a6,a6
+4022db53  extui a2,a2,0x0,0x8
+4022db56  s8i a2,a5,0x0 ; WRITE 3ffe8374
+4022db59  slli a2,a2,0x6
+4022db5c  l32r a0,0x402015c4 ; READ 402015c4
+4022db5f  callx0 a0 ; COMPUTED_CALL 40100da8
+4022db62  l32r a7,0x4022db30 ; READ 4022db30 ; PARAM 3fff1cf0
+4022db65  s32i a2,a7,0x4 ; WRITE 3fff1cf4
+4022db68  bnez.n a2,0x4022db6d ; CONDITIONAL_JUMP 4022db6d
+4022db6a  call0 0x402020d4 ; UNCONDITIONAL_CALL 402020d4
+4022db6d  l32r a2,0x4022db34 ; READ 4022db34
+4022db70  l8ui a2,a2,0x0 ; READ 3ffe8374
+4022db73  call0 0x40235e80 ; UNCONDITIONAL_CALL 40235e80
+4022db76  l32r a2,0x4022db34 ; READ 4022db34
+4022db79  l8ui a2,a2,0x0 ; READ 3ffe8374
+4022db7c  call0 0x40226a90 ; UNCONDITIONAL_CALL 40226a90
+4022db7f  movi.n a2,0x3
+4022db81  call0 0x40226ae0 ; UNCONDITIONAL_CALL 40226ae0
+4022db84  movi.n a2,0x3
+4022db86  call0 0x40226ab8 ; UNCONDITIONAL_CALL 40226ab8
+4022db89  movi.n a2,0x5
+4022db8b  call0 0x40202eb8 ; UNCONDITIONAL_CALL 40202eb8
+4022db8e  l32i.n a0,a1,0x0 ; DATA Stack[-0x10]
+4022db90  addi a1,a1,0x10
+4022db93  ret.n

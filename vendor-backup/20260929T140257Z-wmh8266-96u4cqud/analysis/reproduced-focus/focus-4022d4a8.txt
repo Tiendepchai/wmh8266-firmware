@@ -1,0 +1,56 @@
+REQUEST 4022d4a8
+FUNCTION 4022d4a8 at_gmr_execute __call0
+
+/* Command table +GMR at flash 0x5c458. AT version arguments 1,1,0,0; build May 11 2016 18:09:56. */
+
+void __call0 at_gmr_execute(void)
+
+{
+  undefined4 uVar1;
+  byte abStack_50 [64];
+  
+  FUN_402057a8(abStack_50,PTR_s_AT_version__d__d__d__d__s__s__4022d4a0,1,1,0,0,
+               PTR_s_May_11_2016_4022d498,PTR_s_18_09_56_4022d49c);
+  at_output_cstring(abStack_50);
+  uVar1 = sdk_version_string();
+  FUN_402057a8(abStack_50,PTR_s_SDK_version__s_4022d4a4,uVar1);
+  at_output_cstring(abStack_50);
+  if (*(byte **)PTR_DAT_4022d434 != (byte *)0x0) {
+    at_output_cstring(*(byte **)PTR_DAT_4022d434);
+  }
+  FUN_4022d7b8();
+  return;
+}
+
+
+ASSEMBLY
+4022d4a8  l32r a3,0x4022d4a0 ; READ 4022d4a0
+4022d4ab  movi a4,0x1
+4022d4ae  movi.n a5,0x1
+4022d4b0  movi.n a6,0x0
+4022d4b2  movi.n a7,0x0
+4022d4b4  l32r a2,0x4022d498 ; READ 4022d498
+4022d4b7  addi a1,a1,-0x60
+4022d4ba  s32i a0,a1,0x50
+4022d4bd  s32i.n a2,a1,0x0
+4022d4bf  l32r a0,0x4022d49c ; READ 4022d49c
+4022d4c2  addi a2,a1,0x10
+4022d4c5  s32i.n a0,a1,0x4
+4022d4c7  call0 0x402057a8 ; UNCONDITIONAL_CALL 402057a8
+4022d4ca  addi a2,a1,0x10
+4022d4cd  call0 0x402358c0 ; UNCONDITIONAL_CALL 402358c0
+4022d4d0  call0 0x4020525c ; UNCONDITIONAL_CALL 4020525c
+4022d4d3  mov.n a4,a2
+4022d4d5  l32r a3,0x4022d4a4 ; READ 4022d4a4
+4022d4d8  addi a2,a1,0x10
+4022d4db  call0 0x402057a8 ; UNCONDITIONAL_CALL 402057a8
+4022d4de  addi a2,a1,0x10
+4022d4e1  call0 0x402358c0 ; UNCONDITIONAL_CALL 402358c0
+4022d4e4  l32r a2,0x4022d434 ; READ 4022d434
+4022d4e7  l32i.n a2,a2,0x0
+4022d4e9  beqz.n a2,0x4022d4ee ; CONDITIONAL_JUMP 4022d4ee
+4022d4eb  call0 0x402358c0 ; UNCONDITIONAL_CALL 402358c0
+4022d4ee  call0 0x4022d7b8 ; UNCONDITIONAL_CALL 4022d7b8
+4022d4f1  l32i a0,a1,0x50
+4022d4f4  addi a1,a1,0x60
+4022d4f7  ret.n

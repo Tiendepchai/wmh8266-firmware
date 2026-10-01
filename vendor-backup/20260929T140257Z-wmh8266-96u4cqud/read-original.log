@@ -1,0 +1,16 @@
+esptool v5.4.0
+Serial port /dev/cu.usbserial-0001:
+NOTE: Pre-connection option "no-reset" was selected. Connection may fail if the chip is not in bootloader or flasher stub mode.
+Connecting...
+Connected to ESP8266 on /dev/cu.usbserial-0001:
+Chip type:          ESP8266EX
+Features:           Wi-Fi, 160MHz
+Crystal frequency:  26MHz
+MAC:                60:01:94:0f:16:4b
+
+Stub flasher is already running. No upload is necessary.
+
+Configuring flash size...
+Read 1048576 bytes from 0x00000000 in 96.7 seconds (86.7 kbit/s) to '/Users/allah-computer/Research/Vibe-code-smarthome/firmware-backup/20260929T140257Z-wmh8266-96u4cqud/original.bin'.
+
+Staying in flasher stub.

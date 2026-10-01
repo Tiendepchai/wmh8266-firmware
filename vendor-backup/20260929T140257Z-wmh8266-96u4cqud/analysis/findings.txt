@@ -1,0 +1,144 @@
+WMH-8266 ESP-01: focused offline reverse engineering
+Date: 2026-09-29
+Scope: existing 1 MiB flash backups only. No serial/device/network access, execution of firmware, reset, erase, flash, upload, product source edit, or publication.
+
+BOTTOM LINE
+The ESP flash contains a second-stage bootloader and Ai-Thinker/Espressif AT networking firmware, not an identified WMH relay web application. The TCP server receive callback forwards payload bytes to a serial host using +IPD; AT+CIPSEND supplies response bytes in the other direction. This is positive code evidence, not merely a string fingerprint.
+
+High confidence: AT networking/serial transport architecture in the selected image.
+Medium-high confidence: the observed WMH HTML/form logic is supplied by a separate serial host/controller. Assumption: the previously observed HTTP service is this device and uses the recovered AT server path. No second MCU dump, PCB tracing, runtime RAM, or UART trace was available.
+Unknown: actual relay GPIO, relay electrical polarity, external MCU identity, exact RLOF/RLON form parser, and the cause of the observed approximately three-second connection lifetime. Do NOT select a direct-GPIO Tasmota relay template based on this dump.
+
+1. IMAGE VALIDATION AND REAL MAPPINGS
+Both original.bin and verify-read.bin are 1048576 bytes, byte-identical.
+SHA256: 7e281748a3df4ede9d2bddefa04295ac3c8cba8d2504a15e4b752640c374b1f8
+Original files were opened read-only; no original metadata/permission changes requested or made.
+
+Bootloader: E9 v1 at physical flash 0x000000, end-exclusive 0x000ca0.
+Entry 0x40100420; XOR checksum 0x79 valid. Boot header: DIO, 40 MHz, 1 MiB.
+  physical payload 0x000010 -> CPU 0x40100000, size 0x740, IRAM executable
+  physical payload 0x000758 -> CPU 0x3ffe8000, size 0x308, DRAM non-executable
+  physical payload 0x000a68 -> CPU 0x3ffe8310, size 0x228, DRAM non-executable
+Boot string identifies "2nd boot version : 1.5" at flash 0x000ad9.
+Boot entry was actually disassembled/decompiled, separately from the app.
+
+Application: EA v2 container at physical 0x001000.
+  physical payload 0x001010 -> CPU 0x40201010, size 0x5df00, mapped IROM
+  nested E9 header at physical 0x05ef10
+  physical payload 0x05ef20 -> CPU 0x40100000, size 0x7650, IRAM
+  physical payload 0x066578 -> CPU 0x3ffe8000, size 0xa84, DRAM
+  physical payload 0x067004 -> CPU 0x3ffe8a90, size 0x3060, DRAM
+Entry 0x40100004. XOR checksum 0xc6 valid at 0x06a06f.
+SDK-adjusted CRC32 0x02dffab2 valid at 0x06a070 over [0x1000,0x6a070).
+Image end-exclusive including CRC: 0x06a074.
+IROM mapping is physical flash offset + 0x40200000, NOT raw-file-at-zero and NOT IROM at 0x40200000 without the 0x1010 offset.
+Every imported app byte was compared with the corresponding original byte; all matched. Both DRAM blocks are non-executable. Added RAM/ROM/MMIO blocks are UNINITIALIZED modeling placeholders, not recovered contents.
+
+Header caveat: outer app mode/frequency bytes 0/1 disagree with nested app 0/0x40. esptool reports nested QIO/40 MHz/4 MiB. This is image metadata, not evidence the physical module has 4 MiB. Preserve the complete verified 1 MiB backup; do not infer migration flash settings from the app header alone.
+
+Boot-selection evidence: selector byte at 0xff000 is 1, selecting metadata bank 0xfe000. Its first bytes are flags 0xfc, mode 0xe5. Decoded branches in boot_entry select normal user1 at 0x1000 (literal at CPU 0x401000cc; physical 0xdc). This connects the recovered app to the captured boot configuration. No hardware boot was performed.
+All E9-byte positions in the dump were tested against bounded ESP IRAM/DRAM segment headers plus XOR checksum. Only 0x0 and nested 0x5ef10 passed. A checksum alone is not authenticity verification. No other standard E9 app was found.
+
+2. FIRMWARE IDENTIFICATION AND TARGETED STRINGS
++GMR dispatch record at CPU 0x4025c458 / physical 0x5c458 selects 0x4022d4a8. Its call0 instructions set version arguments a4=1, a5=1, a6=0, a7=0. Build strings: May 11 2016, 18:09:56. SDK getter 0x4020525c returns 1.5.4(baaeaebb). Ai-Thinker extension commands and OTA client paths are present; no claim of byte-for-byte identity with an upstream release.
+Safe marker locations:
+  +CIPSERVER: physical 0x67f58, CPU 0x3ffe99e4
+  +CIPCLOSE:  physical 0x67f20, CPU 0x3ffe99ac
+  +CIPSEND:   physical 0x67f2c, CPU 0x3ffe99b8
+  +CIPSTO:    physical 0x67f70, CPU 0x3ffe99fc
+  +IPD,%d,%d: substring: physical 0x683a6, CPU 0x3ffe9e32
+    Complete format starts with CR/LF two bytes earlier at CPU 0x3ffe9e30.
+No literal RLOF, RLON, WMH-8266, RELAY ON, RELAY OFF, <form, or POST was found in the validated application. The relay-specific markers also had no full-dump literal hits. Absence alone would not prove an external controller; the forwarding code below supplies the stronger evidence.
+The two HTTP request strings are outbound OTA-client GET requests, at physical 0x692f4 and 0x69460; they are not the observed relay HTML response. WiFi configuration regions and unrelated strings were not dumped into this report. No credential values included.
+
+3. CONTROL FLOW: NETWORK BYTES TO UART, NOT FORM DECODING
+Names below are analyst labels, not recovered original identifiers. IROM function CPU addresses translate to physical offsets by subtracting 0x40200000.
+
+AT+CIPSERVER set handler 0x402308ec (physical 0x308ec)
+  Dispatch record physical 0x5c938; set pointer at 0x5c948.
+  Creates TCP server, registers accept callback 0x40230794.
+Accept callback 0x40230794
+  Loads receive callback 0x4022e004 through literal 0x4022e5c4.
+  At 0x40230850 calls 0x40226bc8, whose body stores callback at espconn+0xc.
+  Sent callback 0x4022e4fc and closed callback 0x40230564 registered separately.
+Receive callback 0x4022e004
+  Normal mode: constructs +IPD header; copies incoming payload unchanged; queues combined bytes.
+  Transparent mode: forwards payload directly, without +IPD.
+  No HTTP form key comparisons or GPIO operation in this callback.
+
+Crucial verified receive instructions:
+  4022e096 l32i a3,a1,0x10   ; original incoming payload pointer
+  4022e099 mov a14,a2        ; header length from string-length call
+  4022e09c mov.n a4,a13      ; incoming length
+  4022e09e add.n a2,a12,a2   ; output buffer + header length
+  4022e0a3 callx0 a0         ; 0x400018b4, copy(buffer+header,payload,length)
+  4022e0a6 l8ui a2,a15,0x2   ; link id
+  4022e0a9 mov.n a3,a12      ; output buffer
+  4022e0ab movi.n a5,0x1     ; queue allowed
+  4022e0ad add.n a4,a14,a13  ; total length
+  4022e0af extui a4,a4,0,16
+  4022e0b2 call0 0x40235d40  ; serial output abstraction
+
+Output path 0x40235d40 -> 0x40235c28 -> ring-buffer append 0x40106490.
+The abstraction supports optional output hooks; the ordinary unhooked path is UART queuing. UART transmit service 0x40106710 drains bytes through 0x40106698. At CPU 0x401066c5 / physical 0x655e5 the instruction s32i a8,a4,0x200 writes each queued byte to UART FIFO (base 0x5ffffe00 plus 0x200, plus selected UART stride). This is not a relay register write.
+
+Reverse direction:
+  0x40232318 reads UART data and runs an AT-command/raw-payload state machine.
+  0x40232950 dispatches complete commands via 0x4022d914, or raw send data via 0x4022fef4.
+  0x4022d914 selects execute/query/test/set handlers from 0x18-byte command records based on CR, ?CR, =?CR, or =value. This is an AT parser, NOT the HTML form parser.
+  AT+CIPSEND handler 0x4022fae4 validates link/length, enters raw-payload state, emits prompt.
+  0x4022fef4 passes the supplied buffer and length to the link's network send callback; normal TCP link send pointer is 0x4022692c.
+  Successful-send callback 0x4022e4fc emits SEND OK, resets send state. No direct automatic socket close in that callback.
+
+Consequences: the ESP transport can carry POST bytes containing RLOF/RLON without interpreting them. The observed button names cannot be used to infer ESP GPIO/polarity. Exact remote-host form parsing semantics are not recoverable from this ESP dump alone.
+
+4. GPIO / EXTERNAL HOST ASSESSMENT
+A generic extension exists: +CIOWRITE dispatch record at physical 0x66e18 selects 0x402459d0. It parses requested pin and level and calls generic writer 0x402455fc. Validation mask at 0x4024559c is 0x1f03f, allowing GPIO 0..5 and 12..16. These are generic supported pins, not pins known to be connected on this board.
+0x402455fc selects pin mux, forms set/clear/output-enable bitmasks, then calls ROM 0x40004cd0 for GPIO 0..5/12..15; GPIO16 takes a separate RTC path. High/low level follows the supplied argument. The ROM implementation is not in the flash dump; setter role is inferred from the standard address and verified argument bitmasks.
+Only recovered code caller of 0x402455fc is +CIOWRITE handler, not the network receive callback. This is not a proof there are no other indirect GPIO writers anywhere in SDK code.
+No relay-specific pin or active-high/active-low electrical mapping established. Two viable architectures remain: external host directly drives relay, or external host asks ESP generic GPIO writer to drive it. An external UART host is strongly supported; exact board wiring remains unknown.
++CIOMODE at 0x4024597c parses parameters then acknowledges; the examined function has no GPIO mode-setting call. This is not evidence a particular relay output is initialized.
+AT UART initialization has a default 115200 constant at IROM literal 0x402361c0. Selected saved AT configuration bank is 0x7e000; baud/settings field at 0x7e008 is all 0xff, selecting fallback in 0x402361c4. This suggests initial AT baud 115200, not a measurement; host can change it later. Not the ROM boot-log baud.
+
+5. DELAY AND SOCKET TEARDOWN
+The earlier claim of a fixed approximately three-second firmware relay/HTTP delay is unsupported and should be withdrawn. No recovered relay HTTP handler exists in this app. The observed early HTML arrival and late socket end are distinct events.
+
+Verified potential teardown mechanisms:
+A. Explicit host close: AT+CIPCLOSE handler 0x4022f640 (multi-link) or 0x4022f95c (single-link) calls link+0x38, installed as 0x40226d44. This reaches TCP close handling at 0x40220750/0x40220774. Timing depends on the serial host issuing close and the TCP state.
+B. Configurable server idle expiry: +CIPSTO handler 0x40230f70 parses range 0..7200. At 0x40230fce it stores a3 to runtime config 0x3ffe8378; at 0x40230fd2 calls 0x40226d04(server,value,0). That routine stores the value at internal node+0x28.
+  Initialized flash value at physical 0x668f0 / CPU 0x3ffe8378 is 0xb4 (180), NOT 3. It is mutable runtime RAM; flash does not reveal a later host-issued value.
+  Poll callback 0x40220dd8 increments node+0x2c and compares node/server timeout, closing on expiry. Receive callback 0x40220cec resets that counter. Poll is registered at 0x40220ee8 with interval parameter 4. Wall-clock units/cadence were not fully traced through lwIP; do not convert counters into a measured delay here.
+C. Peer close, errors, retry behavior, and higher-level host timing remain possible.
+
+There is no evidence tying the observed approximately three seconds to any one mechanism. Need a previously captured UART trace / host firmware / timestamped packet close flags to distinguish these; none was acquired during this task. A static ESP flash backup does not contain live CIPSEND/CIPCLOSE traffic or current mutable timer values.
+
+6. TASMOTA / RECOVERY IMPLICATIONS
+Keep original.bin plus independent verify-read.bin; full-flash rollback material includes bootloader, app, RF/system/AT configuration. App-only extracted image is NOT a complete recovery backup. Artifacts are sensitive even though this report is redacted.
+A plain direct-GPIO Tasmota configuration is NOT justified. Replacing AT firmware may remove the interface expected by the separate host and break both web UI and relay control. A normal serial-relay template also cannot be assumed: AT WiFi coprocessor architecture is different from a tiny MCU accepting fixed relay frames.
+Before choosing migration approach, identify the carrier controller and trace ESP TX/RX and relay driver with device unpowered, or analyze an already-acquired host firmware/serial capture. This report does not authorize any new hardware operation. No flash commands issued or recommended for execution now.
+Header discrepancies require care: boot header DIO/1 MiB differs from app QIO/4 MiB metadata. Physical chip capacity and electrical pin routing must govern any future image selection. No exact original source recovered or claimed.
+
+7. ARTIFACTS AND REPRODUCIBILITY
+All paths below are relative to this private analysis directory:
+  memory-map.json          verified source hash, headers, offsets, segment mappings, checksums
+  targeted-strings.json    allowlisted literals only, offsets/CPU addresses
+  image-scan.json          validated E9 candidates and nonsecret boot selector fields
+  import-validation.txt   complete byte comparison and Ghidra memory permissions
+  map_firmware.py          stdlib validator + Intel HEX generator; runnable assertion checks
+  app.hex / boot.hex       correctly mapped imports, separate programs
+  app-image.bin            extracted v2 app, private; not a full recovery image
+  projects/WMH8266.gpr     Ghidra project (requires adjacent WMH8266.rep directory)
+  focused-evidence.txt    selected annotated decompilation plus full corresponding assembly
+  focus-ADDRESS.txt        additional targeted decompilation and disassembly; private
+  boot/focus-40100420.txt  separately decompiled boot entry
+  PrepareXtensa.java / PrepareBoot.java / AnnotateEvidence.java / ValidateImport.java
+  ExportFocus.java / QueryRefs.java / focus.sh / reproduce.sh
+
+Reproduce checks: python3 map_firmware.py (run with this script's absolute path).
+Reproduce imports/analysis: sh reproduce.sh (absolute path), uses a new reproduced-projects directory and refuses replacement. Requires installed Ghidra 12.1.3 and JDK21 at paths recorded in script. No downloads or device access.
+Ghidra language Xtensa:LE:32:default, cspec default; recovered functions explicitly __call0. Some initially guessed decompiler signatures lost live arguments; crucial forwarding/timeout claims were checked against a2-a5 and call instructions, then signatures corrected. Unmapped ROM routines cannot be disassembled from this dump. Placeholder inferred ROM names are labeled as such.
+The whole app underwent Ghidra autoanalysis; targeted functions were genuinely decompiled, not strings-only triage. SDK-wide analysis is incomplete, and discovered function count is heuristic. No claim of exhaustive source recovery or exact runtime behavior.
+
+Tool status: configured Ghidra MCP failed CONNECTION_CLOSED; native analyzeHeadless worked. This connection failure did not block local disassembly/decompilation. Existing esptool v5.4.0 independently validated both image XOR checksums offline. No external services used.
+
+Final verification: reproduce.sh was actually run through a fresh app import, annotation, byte validation, focused decompilation, and separate boot import. All three reproduction logs have successful saves and no ERROR/Exception lines. Representative decompilations were checked for bad-instruction truncation. Ghidra created some inner project files with broader bits despite umask; the entire private analysis tree was subsequently normalized to directories 0700/files 0600 and asserted. reproduce.sh now includes that normalization. The containing analysis directory stayed private throughout. verification.json records final hash equality and permission checks. Both original backup hashes remain unchanged.

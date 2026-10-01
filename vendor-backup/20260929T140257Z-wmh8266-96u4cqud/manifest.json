@@ -1,0 +1,178 @@
+{
+  "started_utc": "2026-09-29T14:02:57.968723+00:00",
+  "backup_directory": "/Users/allah-computer/Research/Vibe-code-smarthome/firmware-backup/20260929T140257Z-wmh8266-96u4cqud",
+  "port": "/dev/cu.usbserial-0001",
+  "baud": 115200,
+  "range": {
+    "address": 0,
+    "length": 1048576
+  },
+  "host": {
+    "platform": "Darwin-25.1.0-arm64-arm-64bit",
+    "python": "3.12.14"
+  },
+  "prior_reported_not_live": {
+    "board": "WMH-8266 ESP-01",
+    "chip": "ESP8266EX",
+    "chip_id": "0x000f164b",
+    "mac": "60:01:94:0f:16:4b",
+    "flash_size_bytes": 1048576,
+    "flash_manufacturer_id": "0xef",
+    "flash_device_id": "0x4014",
+    "flash_vendor": "Winbond"
+  },
+  "live_observed": {
+    "chip": {
+      "value": "ESP8266EX",
+      "source": "read-verify.log"
+    },
+    "mac": {
+      "value": "60:01:94:0f:16:4b",
+      "source": "read-verify.log"
+    },
+    "crystal": {
+      "value": "26MHz",
+      "source": "read-verify.log"
+    }
+  },
+  "commands": [
+    {
+      "argv": [
+        "uvx",
+        "esptool",
+        "version"
+      ],
+      "command": "uvx esptool version",
+      "started_utc": "2026-09-29T14:02:57.982341+00:00",
+      "log": "esptool-version.log",
+      "exit_code": 0,
+      "finished_utc": "2026-09-29T14:02:58.114031+00:00"
+    },
+    {
+      "argv": [
+        "uvx",
+        "esptool",
+        "--chip",
+        "esp8266",
+        "--port",
+        "/dev/cu.usbserial-0001",
+        "--baud",
+        "115200",
+        "--before",
+        "no-reset",
+        "--after",
+        "no-reset-stub",
+        "read-flash",
+        "--no-progress",
+        "0x0",
+        "0x100000",
+        "/Users/allah-computer/Research/Vibe-code-smarthome/firmware-backup/20260929T140257Z-wmh8266-96u4cqud/original.bin"
+      ],
+      "command": "uvx esptool --chip esp8266 --port /dev/cu.usbserial-0001 --baud 115200 --before no-reset --after no-reset-stub read-flash --no-progress 0x0 0x100000 /Users/allah-computer/Research/Vibe-code-smarthome/firmware-backup/20260929T140257Z-wmh8266-96u4cqud/original.bin",
+      "started_utc": "2026-09-29T14:02:58.114723+00:00",
+      "log": "read-original.log",
+      "exit_code": 0,
+      "finished_utc": "2026-09-29T14:04:36.118953+00:00"
+    },
+    {
+      "argv": [
+        "uvx",
+        "esptool",
+        "--chip",
+        "esp8266",
+        "--port",
+        "/dev/cu.usbserial-0001",
+        "--baud",
+        "115200",
+        "--before",
+        "no-reset",
+        "--after",
+        "no-reset-stub",
+        "read-flash",
+        "--no-progress",
+        "0x0",
+        "0x100000",
+        "/Users/allah-computer/Research/Vibe-code-smarthome/firmware-backup/20260929T140257Z-wmh8266-96u4cqud/verify-read.bin"
+      ],
+      "command": "uvx esptool --chip esp8266 --port /dev/cu.usbserial-0001 --baud 115200 --before no-reset --after no-reset-stub read-flash --no-progress 0x0 0x100000 /Users/allah-computer/Research/Vibe-code-smarthome/firmware-backup/20260929T140257Z-wmh8266-96u4cqud/verify-read.bin",
+      "started_utc": "2026-09-29T14:04:36.121315+00:00",
+      "log": "read-verify.log",
+      "exit_code": 0,
+      "finished_utc": "2026-09-29T14:06:14.072014+00:00"
+    },
+    {
+      "argv": [
+        "uvx",
+        "esptool",
+        "--chip",
+        "esp8266",
+        "image-info",
+        "/Users/allah-computer/Research/Vibe-code-smarthome/firmware-backup/20260929T140257Z-wmh8266-96u4cqud/original.bin"
+      ],
+      "command": "uvx esptool --chip esp8266 image-info /Users/allah-computer/Research/Vibe-code-smarthome/firmware-backup/20260929T140257Z-wmh8266-96u4cqud/original.bin",
+      "started_utc": "2026-09-29T14:06:14.075248+00:00",
+      "log": "image-info.log",
+      "exit_code": 0,
+      "finished_utc": "2026-09-29T14:06:14.205862+00:00"
+    }
+  ],
+  "files": {
+    "original.bin": {
+      "bytes": 1048576,
+      "sha256": "7e281748a3df4ede9d2bddefa04295ac3c8cba8d2504a15e4b752640c374b1f8",
+      "read_exit_code": 0,
+      "size_correct": true,
+      "mode": "0o600"
+    },
+    "verify-read.bin": {
+      "bytes": 1048576,
+      "sha256": "7e281748a3df4ede9d2bddefa04295ac3c8cba8d2504a15e4b752640c374b1f8",
+      "read_exit_code": 0,
+      "size_correct": true,
+      "mode": "0o600"
+    },
+    "read-original.log": {
+      "bytes": 665,
+      "sha256": "300f6b9f08fdae7316e92a5dc60d354712581e88ed91b07f08be80331368397a",
+      "mode": "0o600"
+    },
+    "read-verify.log": {
+      "bytes": 668,
+      "sha256": "43f3143b5916b1fc7a3d357a71aa4e126c427fb456c3e5c2b03f8ec1d58f05f8",
+      "mode": "0o600"
+    },
+    "image-info.log": {
+      "bytes": 545,
+      "sha256": "d84948ca49d0f4c6e70a3fa9b1abc4b0a58f34006237ed13c7cb997df576d58b",
+      "mode": "0o600"
+    },
+    "esptool-version.log": {
+      "bytes": 21,
+      "sha256": "dd900a2b65ca8b4ba8b413ae903744fc2b9a2ca732b6859445de3e08b7d9d8f5",
+      "mode": "0o600"
+    }
+  },
+  "safety": {
+    "flash_write_or_erase": false,
+    "application_run_requested": false,
+    "reset_requested": false,
+    "stub_ram_loading": true,
+    "external_upload": false,
+    "umask": "077"
+  },
+  "status": "backup_verified",
+  "esptool_version_output": "esptool v5.4.0\n5.4.0",
+  "verification": {
+    "both_sizes_exact": true,
+    "byte_equal": true,
+    "sha256_equal": true
+  },
+  "image_info": {
+    "offline": true,
+    "exit_code": 0,
+    "log": "image-info.log"
+  },
+  "errors": [],
+  "finished_utc": "2026-09-29T14:06:14.206173+00:00",
+  "live_observed_notes": "Only values printed during this session are live observations; missing IDs remain unverified prior reports."
+}

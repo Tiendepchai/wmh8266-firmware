@@ -1,0 +1,16 @@
+PASS flash 0x1010 size 0x5df00 CPU 0x40201010 executable=true all bytes identical
+PASS flash 0x5ef20 size 0x7650 CPU 0x40100000 executable=true all bytes identical
+PASS flash 0x66578 size 0xa84 CPU 0x3ffe8000 executable=false all bytes identical
+PASS flash 0x67004 size 0x3060 CPU 0x3ffe8a90 executable=false all bytes identical
+BLOCK DRAM_3ffe8000 3ffe8000..3ffe8a83 initialized=true read=true write=true execute=false
+BLOCK DRAM_3ffe8a90 3ffe8a90..3ffebaef initialized=true read=true write=true execute=false
+BLOCK RAM_uninitialized 3ffebb00..3fffffff initialized=false read=true write=true execute=false
+BLOCK ROM_not_dumped 40000000..4000ffff initialized=false read=true write=false execute=true
+BLOCK IRAM 40100000..4010764f initialized=true read=true write=false execute=true
+BLOCK IROM 40201010..4020ffff initialized=true read=true write=false execute=true
+BLOCK IROM 40210000..4021ffff initialized=true read=true write=false execute=true
+BLOCK IROM 40220000..4022ffff initialized=true read=true write=false execute=true
+BLOCK IROM 40230000..4023ffff initialized=true read=true write=false execute=true
+BLOCK IROM 40240000..4024ffff initialized=true read=true write=false execute=true
+BLOCK IROM 40250000..4025ef0f initialized=true read=true write=false execute=true
+BLOCK MMIO 60000000..6000ffff initialized=false read=true write=true execute=false

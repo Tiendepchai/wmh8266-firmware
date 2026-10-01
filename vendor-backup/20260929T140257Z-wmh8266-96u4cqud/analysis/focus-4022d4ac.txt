@@ -1,0 +1,14 @@
+REQUEST 4022d4ac
+FUNCTION 4022d4ac FUN_4022d4ac __call0
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __call0 FUN_4022d4ac(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+ASSEMBLY

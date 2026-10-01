@@ -1,0 +1,58 @@
+REQUEST 40245a40
+FUNCTION 40245a40 at_cioread_set __call0
+
+/* Reads requested GPIO; no relay-state mapping established. */
+
+void __call0 at_cioread_set(undefined4 param_1,int param_2)
+
+{
+  undefined1 uVar1;
+  int iVar2;
+  undefined *puVar3;
+  
+  uVar1 = (*(code *)PTR_FUN_402381b8)(param_2 + 1);
+  iVar2 = extension_gpio_valid(uVar1);
+  if (iVar2 == 0) {
+    FUN_402358f0(PTR_s_Invalid_GPIO_40245978);
+    FUN_4022d7d4();
+  }
+  else {
+    iVar2 = FUN_402457e8(uVar1);
+    puVar3 = PTR_s_0_LOW_40245a3c;
+    if (iVar2 == 1) {
+      puVar3 = PTR_s_1_HIGH_40245a38;
+    }
+    FUN_402358f0(puVar3);
+    FUN_4022d7b8();
+  }
+  return;
+}
+
+
+ASSEMBLY
+40245a40  addi a1,a1,-0x10
+40245a43  addi.n a2,a3,0x1
+40245a45  s32i a12,a1,0x8
+40245a48  s32i a0,a1,0xc
+40245a4b  l32r a0,0x402381b8 ; READ 402381b8
+40245a4e  callx0 a0 ; COMPUTED_CALL 40106c2c
+40245a51  extui a12,a2,0x0,0x8
+40245a54  mov.n a2,a12
+40245a56  call0 0x402455a0 ; UNCONDITIONAL_CALL 402455a0
+40245a59  beqz.n a2,0x40245a78 ; CONDITIONAL_JUMP 40245a78
+40245a5b  mov.n a2,a12
+40245a5d  call0 0x402457e8 ; UNCONDITIONAL_CALL 402457e8
+40245a60  bnei a2,0x1,0x40245a69 ; CONDITIONAL_JUMP 40245a69
+40245a63  l32r a2,0x40245a38 ; READ 40245a38 ; PARAM 3ffeb0d0
+40245a66  j 0x40245a6c ; UNCONDITIONAL_JUMP 40245a6c
+40245a69  l32r a2,0x40245a3c ; READ 40245a3c ; PARAM 3ffeb0dc
+40245a6c  call0 0x402358f0 ; UNCONDITIONAL_CALL 402358f0
+40245a6f  call0 0x4022d7b8 ; UNCONDITIONAL_CALL 4022d7b8
+40245a72  j 0x40245a81 ; UNCONDITIONAL_JUMP 40245a81
+40245a78  l32r a2,0x40245978 ; READ 40245978 ; PARAM 3ffeb0c0
+40245a7b  call0 0x402358f0 ; UNCONDITIONAL_CALL 402358f0
+40245a7e  call0 0x4022d7d4 ; UNCONDITIONAL_CALL 4022d7d4
+40245a81  l32i a0,a1,0xc
+40245a84  l32i a12,a1,0x8
+40245a87  addi a1,a1,0x10
+40245a8a  ret.n

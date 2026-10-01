@@ -1,0 +1,64 @@
+REQUEST 40232950
+XREF 402329d6 PARAM
+XREF 402329a8 DATA
+FUNCTION 40232950 at_process_pending __call0
+CALLER 402329d6 PARAM
+CALLER 402329a8 DATA
+
+/* State 2 dispatches AT command; state 4 sends supplied payload; state 5 transparent data path. */
+
+void __call0 at_process_pending(void)
+
+{
+  undefined4 uVar1;
+  int iVar2;
+  
+  iVar2 = *(int *)(PTR_DAT_4023223c + 0x18);
+  if (iVar2 == 2) {
+    at_command_dispatch(PTR_DAT_4023223c + 0x30);
+  }
+  else {
+    if (iVar2 != 4) {
+      if (iVar2 != 5) {
+        return;
+      }
+      FUN_40230368();
+      return;
+    }
+    at_submit_tx_payload(PTR_DAT_4022e344);
+  }
+  uVar1 = *(undefined4 *)(PTR_DAT_4023223c + 0x18);
+  if (PTR_DAT_4023220c[2] != '\0') {
+    uVar1 = 0;
+  }
+  *(undefined4 *)(PTR_DAT_4023223c + 0x18) = uVar1;
+  return;
+}
+
+
+ASSEMBLY
+40232950  addi a1,a1,-0x10
+40232953  s32i a0,a1,0x0 ; DATA Stack[-0x10]
+40232956  l32r a0,0x4023223c ; READ 4023223c
+40232959  l32i a5,a0,0x18 ; READ 3fff1d68
+4023295c  bnei a5,0x2,0x4023297d ; CONDITIONAL_JUMP 4023297d
+4023295f  mov a2,a0
+40232962  addi a2,a2,0x30 ; PARAM 3fff1d80
+40232965  call0 0x4022d914 ; UNCONDITIONAL_CALL 4022d914
+40232968  l32r a6,0x4023220c ; READ 4023220c
+4023296b  l32r a4,0x4023223c ; READ 4023223c
+4023296e  l8ui a6,a6,0x2 ; READ 3ffe8386
+40232971  l32i.n a3,a4,0x18 ; READ 3fff1d68
+40232973  movi.n a5,0x0
+40232975  movnez a3,a5,a6
+40232978  s32i.n a3,a4,0x18 ; WRITE 3fff1d68
+4023297a  j 0x40232992 ; UNCONDITIONAL_JUMP 40232992
+4023297d  bnei a5,0x4,0x4023298c ; CONDITIONAL_JUMP 4023298c
+40232980  l32r a2,0x4022e344 ; READ 4022e344 ; PARAM 3fff1e90
+40232983  call0 0x4022fef4 ; UNCONDITIONAL_CALL 4022fef4
+40232986  j 0x40232968 ; UNCONDITIONAL_JUMP 40232968
+4023298c  bnei a5,0x5,0x40232992 ; CONDITIONAL_JUMP 40232992
+4023298f  call0 0x40230368 ; UNCONDITIONAL_CALL 40230368
+40232992  l32i.n a0,a1,0x0 ; DATA Stack[-0x10]
+40232994  addi a1,a1,0x10
+40232997  ret.n

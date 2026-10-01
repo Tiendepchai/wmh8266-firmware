@@ -1,0 +1,9 @@
+# Build intermediates
+*.o
+*.d
+*.crf
+
+# IDE & OS
+.DS_Store
+*.swp
+*.bak

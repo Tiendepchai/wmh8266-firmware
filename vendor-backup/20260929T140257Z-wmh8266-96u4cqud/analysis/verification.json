@@ -1,0 +1,14 @@
+{
+  "source_sha256": "7e281748a3df4ede9d2bddefa04295ac3c8cba8d2504a15e4b752640c374b1f8",
+  "bytes": 1048576,
+  "backup_equality": true,
+  "original_mode": "0o600",
+  "analysis_directories_mode": "0700",
+  "analysis_files_mode": "0600",
+  "reproduced_import_and_decompilation": true,
+  "logs_checked_no_errors": [
+    "reproduce-import.log",
+    "reproduce-focus.log",
+    "reproduce-boot.log"
+  ]
+}

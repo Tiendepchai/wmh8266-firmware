@@ -1,0 +1,319 @@
+REQUEST 402455fc
+XREF 40245a18 UNCONDITIONAL_CALL
+FUNCTION 402455fc extension_gpio_write __call0
+CALLER 40245a18 UNCONDITIONAL_CALL
+
+/* Generic requested-pin output mux and ROM GPIO setter; level=1 drives high, 0 low. Electrical
+   relay polarity unknown. */
+
+uint __call0 extension_gpio_write(uint arg0,uint arg1)
+
+{
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  
+  uVar1 = arg1 & 0xff;
+  switch(arg0 & 0xff) {
+  case 0:
+    memw();
+    memw();
+    *(uint *)PTR_DAT_402455d0 = *(uint *)PTR_DAT_402455d0 & 0xfffffecf;
+    uVar3 = (uVar1 ^ 1) & 1;
+    uVar2 = 1;
+    break;
+  case 1:
+    memw();
+    memw();
+    *(uint *)PTR_DAT_402455d4 = *(uint *)PTR_DAT_402455d4 & 0xfffffecf | 0x30;
+    uVar3 = 0;
+    uVar2 = 2;
+    if ((arg1 & 1) == 0) {
+      uVar3 = 2;
+    }
+    uVar1 = uVar1 << 1;
+    break;
+  case 2:
+    memw();
+    memw();
+    *(uint *)PTR_DAT_402455d8 = *(uint *)PTR_DAT_402455d8 & 0xfffffecf;
+    uVar3 = 0;
+    uVar2 = 4;
+    if ((arg1 & 1) == 0) {
+      uVar3 = 4;
+    }
+    uVar1 = uVar1 << 2;
+    break;
+  case 3:
+    memw();
+    memw();
+    *(uint *)PTR_DAT_402455dc = *(uint *)PTR_DAT_402455dc & 0xfffffecf | 0x30;
+    uVar3 = 0;
+    uVar2 = 8;
+    if ((arg1 & 1) == 0) {
+      uVar3 = 8;
+    }
+    uVar1 = uVar1 << 3;
+    break;
+  case 4:
+    memw();
+    memw();
+    *(uint *)PTR_DAT_402455e0 = *(uint *)PTR_DAT_402455e0 & 0xfffffecf;
+    uVar3 = 0;
+    uVar2 = 0x10;
+    if ((arg1 & 1) == 0) {
+      uVar3 = 0x10;
+    }
+    uVar1 = uVar1 << 4;
+    break;
+  case 5:
+    memw();
+    memw();
+    *(uint *)PTR_DAT_402455e4 = *(uint *)PTR_DAT_402455e4 & 0xfffffecf;
+    uVar3 = 0;
+    uVar2 = 0x20;
+    if ((arg1 & 1) == 0) {
+      uVar3 = 0x20;
+    }
+    uVar1 = uVar1 << 5;
+    break;
+  default:
+    return 0;
+  case 0xc:
+    memw();
+    memw();
+    *(uint *)PTR_DAT_402455e8 = *(uint *)PTR_DAT_402455e8 & 0xfffffecf | 0x30;
+    uVar3 = 0;
+    if ((arg1 & 1) == 0) {
+      uVar3 = DAT_40243d10;
+    }
+    uVar1 = uVar1 << 0xc;
+    uVar2 = DAT_40243d10;
+    break;
+  case 0xd:
+    memw();
+    memw();
+    *(uint *)PTR_DAT_402455ec = *(uint *)PTR_DAT_402455ec & 0xfffffecf | 0x30;
+    uVar3 = 0;
+    if ((arg1 & 1) == 0) {
+      uVar3 = DAT_402455c0;
+    }
+    uVar1 = uVar1 << 0xd;
+    uVar2 = DAT_402455c0;
+    break;
+  case 0xe:
+    memw();
+    memw();
+    *(uint *)PTR_DAT_402455f0 = *(uint *)PTR_DAT_402455f0 & 0xfffffecf | 0x30;
+    uVar3 = 0;
+    if ((arg1 & 1) == 0) {
+      uVar3 = DAT_402455c4;
+    }
+    uVar1 = uVar1 << 0xe;
+    uVar2 = DAT_402455c4;
+    break;
+  case 0xf:
+    memw();
+    memw();
+    *(uint *)PTR_DAT_402455f4 = *(uint *)PTR_DAT_402455f4 & 0xfffffecf | 0x30;
+    uVar3 = 0;
+    if ((arg1 & 1) == 0) {
+      uVar3 = DAT_402455c8;
+    }
+    uVar1 = uVar1 << 0xf;
+    uVar2 = DAT_402455c8;
+    break;
+  case 0x10:
+    FUN_40245d9c();
+    FUN_40245ddc(uVar1);
+    return 1;
+  }
+  (*(code *)PTR_rom_gpio_output_set_inferred_402455f8)(uVar1,uVar3,uVar2,0);
+  return 1;
+}
+
+
+ASSEMBLY
+402455fc  addi a1,a1,-0x20
+402455ff  extui a4,a2,0x0,0x8
+40245602  s32i.n a0,a1,0x1c
+40245604  extui a2,a3,0x0,0x8
+40245607  movi.n a3,0x10
+40245609  bgeu a3,a4,0x4024560f ; CONDITIONAL_JUMP 4024560f
+4024560c  j 0x402457d5 ; UNCONDITIONAL_JUMP 402457d5
+4024560f  l32r a3,0x402455cc ; READ 402455cc
+40245612  addx4 a4,a4,a3
+40245615  l32i.n a3,a4,0x0 ; DATA 3ffe8b44
+40245617  jx a3 ; COMPUTED_JUMP 4024561a ; COMPUTED_JUMP 4024563c ; COMPUTED_JUMP 40245668 ; COMPUTED_JUMP 4024568f ; COMPUTED_JUMP 402456bb ; COMPUTED_JUMP 402456e2 ; COMPUTED_JUMP 402457d5 ; COMPUTED_JUMP 40245709 ; COMPUTED_JUMP 40245736 ; COMPUTED_JUMP 40245763 ; COMPUTED_JUMP 40245790 ; COMPUTED_JUMP 402457c4
+4024561a  l32r a3,0x402455d0 ; READ 402455d0
+4024561d  movi a4,-0x131
+40245620  memw
+40245623  l32i.n a5,a3,0x0 ; READ 60000834
+40245625  and a4,a5,a4
+40245628  memw
+4024562b  s32i.n a4,a3,0x0 ; WRITE 60000834
+4024562d  movi.n a3,0x1
+4024562f  xor a3,a2,a3
+40245632  extui a3,a3,0x0,0x1
+40245635  movi.n a4,0x1
+40245637  movi.n a5,0x0
+40245639  j 0x402457ba ; UNCONDITIONAL_JUMP 402457ba
+4024563c  l32r a3,0x402455d4 ; READ 402455d4
+4024563f  movi a4,-0x131
+40245642  memw
+40245645  l32i.n a5,a3,0x0 ; READ 60000818
+40245647  and a4,a5,a4
+4024564a  movi.n a5,0x30
+4024564c  or a4,a4,a5
+4024564f  movi.n a5,0x0
+40245651  memw
+40245654  s32i.n a4,a3,0x0 ; WRITE 60000818
+40245656  mov.n a6,a5
+40245658  extui a3,a2,0x0,0x1
+4024565b  movi.n a4,0x2
+4024565d  moveqz a6,a4,a3
+40245660  mov.n a3,a6
+40245662  slli a2,a2,0x1
+40245665  j 0x402457ba ; UNCONDITIONAL_JUMP 402457ba
+40245668  l32r a3,0x402455d8 ; READ 402455d8
+4024566b  movi a4,-0x131
+4024566e  memw
+40245671  l32i.n a5,a3,0x0 ; READ 60000838
+40245673  and a4,a5,a4
+40245676  movi.n a5,0x0
+40245678  memw
+4024567b  s32i.n a4,a3,0x0 ; WRITE 60000838
+4024567d  mov.n a6,a5
+4024567f  extui a3,a2,0x0,0x1
+40245682  movi.n a4,0x4
+40245684  moveqz a6,a4,a3
+40245687  mov.n a3,a6
+40245689  slli a2,a2,0x2
+4024568c  j 0x402457ba ; UNCONDITIONAL_JUMP 402457ba
+4024568f  l32r a3,0x402455dc ; READ 402455dc
+40245692  movi a4,-0x131
+40245695  memw
+40245698  l32i.n a5,a3,0x0 ; READ 60000814
+4024569a  and a4,a5,a4
+4024569d  movi.n a5,0x30
+4024569f  or a4,a4,a5
+402456a2  movi.n a5,0x0
+402456a4  memw
+402456a7  s32i.n a4,a3,0x0 ; WRITE 60000814
+402456a9  mov.n a6,a5
+402456ab  extui a3,a2,0x0,0x1
+402456ae  movi.n a4,0x8
+402456b0  moveqz a6,a4,a3
+402456b3  mov.n a3,a6
+402456b5  slli a2,a2,0x3
+402456b8  j 0x402457ba ; UNCONDITIONAL_JUMP 402457ba
+402456bb  l32r a3,0x402455e0 ; READ 402455e0
+402456be  movi a4,-0x131
+402456c1  memw
+402456c4  l32i.n a5,a3,0x0 ; READ 6000083c
+402456c6  and a4,a5,a4
+402456c9  movi.n a5,0x0
+402456cb  memw
+402456ce  s32i.n a4,a3,0x0 ; WRITE 6000083c
+402456d0  mov.n a6,a5
+402456d2  extui a3,a2,0x0,0x1
+402456d5  movi.n a4,0x10
+402456d7  moveqz a6,a4,a3
+402456da  mov.n a3,a6
+402456dc  slli a2,a2,0x4
+402456df  j 0x402457ba ; UNCONDITIONAL_JUMP 402457ba
+402456e2  l32r a3,0x402455e4 ; READ 402455e4
+402456e5  movi a4,-0x131
+402456e8  memw
+402456eb  l32i.n a5,a3,0x0 ; READ 60000840
+402456ed  and a4,a5,a4
+402456f0  movi.n a5,0x0
+402456f2  memw
+402456f5  s32i.n a4,a3,0x0 ; WRITE 60000840
+402456f7  mov.n a6,a5
+402456f9  extui a3,a2,0x0,0x1
+402456fc  movi.n a4,0x20
+402456fe  moveqz a6,a4,a3
+40245701  mov.n a3,a6
+40245703  slli a2,a2,0x5
+40245706  j 0x402457ba ; UNCONDITIONAL_JUMP 402457ba
+40245709  l32r a3,0x402455e8 ; READ 402455e8
+4024570c  movi a4,-0x131
+4024570f  memw
+40245712  l32i.n a5,a3,0x0 ; READ 60000804
+40245714  and a4,a5,a4
+40245717  movi.n a5,0x30
+40245719  or a4,a4,a5
+4024571c  memw
+4024571f  s32i.n a4,a3,0x0 ; WRITE 60000804
+40245721  movi.n a5,0x0
+40245723  l32r a4,0x40243d10 ; READ 40243d10
+40245726  extui a3,a2,0x0,0x1
+40245729  mov.n a6,a5
+4024572b  moveqz a6,a4,a3
+4024572e  mov.n a3,a6
+40245730  slli a2,a2,0xc
+40245733  j 0x402457ba ; UNCONDITIONAL_JUMP 402457ba
+40245736  l32r a3,0x402455ec ; READ 402455ec
+40245739  movi a4,-0x131
+4024573c  memw
+4024573f  l32i.n a5,a3,0x0 ; READ 60000808
+40245741  and a4,a5,a4
+40245744  movi.n a5,0x30
+40245746  or a4,a4,a5
+40245749  memw
+4024574c  s32i.n a4,a3,0x0 ; WRITE 60000808
+4024574e  movi.n a5,0x0
+40245750  l32r a4,0x402455c0 ; READ 402455c0
+40245753  extui a3,a2,0x0,0x1
+40245756  mov.n a6,a5
+40245758  moveqz a6,a4,a3
+4024575b  mov.n a3,a6
+4024575d  slli a2,a2,0xd
+40245760  j 0x402457ba ; UNCONDITIONAL_JUMP 402457ba
+40245763  l32r a3,0x402455f0 ; READ 402455f0
+40245766  movi a4,-0x131
+40245769  memw
+4024576c  l32i.n a5,a3,0x0 ; READ 6000080c
+4024576e  and a4,a5,a4
+40245771  movi.n a5,0x30
+40245773  or a4,a4,a5
+40245776  memw
+40245779  s32i.n a4,a3,0x0 ; WRITE 6000080c
+4024577b  movi.n a5,0x0
+4024577d  l32r a4,0x402455c4 ; READ 402455c4
+40245780  extui a3,a2,0x0,0x1
+40245783  mov.n a6,a5
+40245785  moveqz a6,a4,a3
+40245788  mov.n a3,a6
+4024578a  slli a2,a2,0xe
+4024578d  j 0x402457ba ; UNCONDITIONAL_JUMP 402457ba
+40245790  l32r a3,0x402455f4 ; READ 402455f4
+40245793  movi a4,-0x131
+40245796  memw
+40245799  l32i.n a5,a3,0x0 ; READ 60000810
+4024579b  and a4,a5,a4
+4024579e  movi.n a5,0x30
+402457a0  or a4,a4,a5
+402457a3  memw
+402457a6  s32i.n a4,a3,0x0 ; WRITE 60000810
+402457a8  movi.n a5,0x0
+402457aa  l32r a4,0x402455c8 ; READ 402455c8
+402457ad  extui a3,a2,0x0,0x1
+402457b0  mov.n a6,a5
+402457b2  moveqz a6,a4,a3
+402457b5  mov.n a3,a6
+402457b7  slli a2,a2,0xf
+402457ba  l32r a0,0x402455f8 ; READ 402455f8
+402457bd  callx0 a0 ; COMPUTED_CALL 40004cd0
+402457c0  j 0x402457d0 ; UNCONDITIONAL_JUMP 402457d0
+402457c4  s32i a2,a1,0x0 ; DATA Stack[-0x20]
+402457c7  call0 0x40245d9c ; UNCONDITIONAL_CALL 40245d9c
+402457ca  l32i a2,a1,0x0 ; DATA Stack[-0x20]
+402457cd  call0 0x40245ddc ; UNCONDITIONAL_CALL 40245ddc
+402457d0  movi.n a2,0x1
+402457d2  j 0x402457d7 ; UNCONDITIONAL_JUMP 402457d7
+402457d5  movi.n a2,0x0
+402457d7  l32i.n a0,a1,0x1c
+402457d9  addi a1,a1,0x20
+402457dc  ret.n

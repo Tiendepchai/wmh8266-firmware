@@ -1,0 +1,57 @@
+VERIFICATION SUMMARY: WMH-8266 ESP-01 FIRMWARE REVERSE ENGINEERING
+Date: 2026-09-29
+Target: /Users/allah-computer/Research/Vibe-code-smarthome/firmware-backup/20260929T140257Z-wmh8266-96u4cqud/
+Originals: original.bin, verify-read.bin (1048576 bytes each, SHA256: 7e281748a3df4ede9d2bddefa04295ac3c8cba8d2504a15e4b752640c374b1f8)
+Permissions: Directory 0700, Files 0600
+
+1. CLAIMS VERIFICATION MATRIX
+
+[CLAIM 1] ESP runs Ai-Thinker / Espressif AT firmware v1.1.0.0, SDK 1.5.4, acting as serial WiFi modem.
+Status: VERIFIED (High Confidence)
+Evidence:
+- +GMR handler at 0x4022d4a8 sets version arguments 1, 1, 0, 0 (build May 11 2016 18:09:56).
+- SDK version string at 0x4020525c returns "1.5.4(baaeaebb)".
+- Mapped IROM at CPU 0x40201010 (flash 0x1010), entry 0x40100004.
+- Files: analysis/memory-map.json, analysis/focused-evidence.txt (lines 4-76).
+
+[CLAIM 2] ESP-01 firmware implements WMH-8266 HTTP server, HTML generation, and form parser (RLOF/RLON).
+Status: REFUTED
+Evidence:
+- Literal strings "RLOF", "RLON", "WMH-8266", "RELAY ON", "RELAY OFF", "<form", "POST" are absent across entire flash image.
+- AT command dispatcher at 0x4022d914 handles AT protocol, not HTTP.
+- TCP receive callback at 0x4022e004 constructs "+IPD,<link>,<len>:" header and forwards raw TCP payload directly to UART queue (0x40235d40 -> 0x40235c28 -> 0x401066c5 UART FIFO write).
+- Files: analysis/focused-evidence.txt (lines 277-438, 784-956), analysis/targeted-strings.json.
+
+[CLAIM 3] Fixed ~3s firmware delay / GPIO execution delay causes observed connection lifetime.
+Status: REFUTED
+Evidence:
+- No fixed 3-second delay or timer in firmware.
+- Server idle timeout (+CIPSTO, 0x40230f70) initializes to 180 seconds (0xb4 at 0x3ffe8378), not 3 seconds.
+- Connection closure is governed by:
+  (a) Explicit host command "AT+CIPCLOSE" (0x4022f640 / 0x4022f95c).
+  (b) Configurable idle timeout via +CIPSTO (0..7200s, mutable at runtime).
+  (c) Remote peer TCP FIN/RST.
+- Files: analysis/focus-40230f70.txt, analysis/focus-40220dd8.txt.
+
+[CLAIM 4] ESP-01 direct GPIO drives relay with known pin and polarity.
+Status: REFUTED / UNRESOLVED
+Evidence:
+- Generic AT+CIOWRITE handler at 0x402459d0 calls generic extension_gpio_write (0x402455fc).
+- Pin mask 0x1f03f allows arbitrary GPIOs (0..5, 12..16).
+- Direct call to ROM gpio_output_set (0x40004cd0) with level parameter (1=high, 0=low).
+- No hardcoded relay pin, no board-specific initialization, no electrical polarity established.
+- Web/network traffic does not trigger GPIO operations.
+- Files: analysis/focus-402459d0.txt, analysis/focus-402455fc.txt.
+
+[CLAIM 5] Tasmota direct-GPIO migration can be performed directly.
+Status: REFUTED (High Risk)
+Evidence:
+- ESP-01 functions solely as an AT network bridge.
+- Relay and Web UI are managed by an external carrier MCU communicating via UART.
+- Direct-GPIO Tasmota flashing will sever communication with external MCU and break relay control.
+- Hardware inspection or serial snooping between ESP and host MCU required before migration.
+
+2. ARTIFACTS VERIFICATION
+- original.bin: SHA256 7e281748a3df4ede9d2bddefa04295ac3c8cba8d2504a15e4b752640c374b1f8 (verified match).
+- verify-read.bin: SHA256 7e281748a3df4ede9d2bddefa04295ac3c8cba8d2504a15e4b752640c374b1f8 (verified match).
+- All analysis scripts and Ghidra outputs verified reproducible.

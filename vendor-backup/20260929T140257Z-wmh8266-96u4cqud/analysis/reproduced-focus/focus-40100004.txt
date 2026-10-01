@@ -1,0 +1,23 @@
+REQUEST 40100004
+XREF Entry Point EXTERNAL
+FUNCTION 40100004 app_entry __call0
+CALLER Entry Point EXTERNAL
+
+void __call0 app_entry(void)
+
+{
+  undefined1 in_VECBASE;
+  
+  wsr(in_VECBASE,PTR_LOOP_40100000);
+  FUN_40100268(PTR_LOOP_40100000);
+  do {
+    ill();
+  } while( true );
+}
+
+
+ASSEMBLY
+40100004  l32r a2,0x40100000 ; READ 40100000
+40100007  wsr a2,VECBASE
+4010000a  call0 0x40100268 ; UNCONDITIONAL_CALL 40100268
+4010000d  ill

@@ -1,0 +1,493 @@
+REQUEST 402361c4
+XREF 402329e3 UNCONDITIONAL_CALL
+FUNCTION 402361c4 FUN_402361c4 __call0
+CALLER 402329e3 UNCONDITIONAL_CALL
+
+undefined4 __call0 FUN_402361c4(void)
+
+{
+  uint uVar1;
+  undefined2 uVar2;
+  uint uVar3;
+  uint uVar4;
+  int iVar5;
+  int iVar6;
+  undefined4 uVar7;
+  int iVar8;
+  undefined1 auStack_80 [8];
+  int iStack_78;
+  undefined4 uStack_74;
+  undefined4 uStack_70;
+  int iStack_6c;
+  undefined1 uStack_68;
+  undefined1 uStack_67;
+  undefined1 uStack_66;
+  undefined1 uStack_65;
+  char local_64 [8];
+  int iStack_5c;
+  undefined4 uStack_58;
+  undefined4 uStack_54;
+  char local_50 [8];
+  int iStack_48;
+  undefined4 uStack_44;
+  undefined4 uStack_40;
+  uint uStack_3c;
+  undefined4 uStack_38;
+  undefined4 uStack_34;
+  undefined1 auStack_30 [4];
+  undefined4 uStack_2c;
+  undefined4 uStack_28;
+  byte abStack_24 [4];
+  undefined1 auStack_20 [20];
+  
+  iVar5 = FUN_40202198();
+  uVar2 = 0x3d;
+  if (iVar5 != 0) {
+    if (iVar5 == 1) {
+      uVar2 = 0x1d;
+    }
+    else if (((iVar5 == 2) || (iVar5 == 3)) || (iVar5 == 4)) {
+      uVar2 = 0x7d;
+    }
+    else if ((iVar5 == 5) || (iVar5 == 6)) {
+      uVar2 = 0xfd;
+    }
+  }
+  *(undefined2 *)PTR_DAT_4023212c = uVar2;
+  FUN_40232158(auStack_80,8,0);
+  iVar5 = (*(code *)PTR_FUN_4022eaf4)(auStack_80,PTR_DAT_402361b4);
+  if (iVar5 != 0) {
+    iVar5 = (*(code *)PTR_FUN_402015c4)(0xa0,PTR_s_at_init_para_c_402361b8,0x5c);
+    FUN_40232158(iVar5,0xa0,0);
+    iVar6 = (*(code *)PTR_FUN_402031f4)(auStack_80,PTR_DAT_402361b4,3);
+    if (iVar6 == 0) {
+      iVar6 = 0;
+    }
+    else {
+      (*(code *)PTR_FUN_402015e0)(iVar5,0,0xa0);
+      FUN_40232158(iVar5 + 8,0xc,0);
+      FUN_40232158(iVar5 + 0x2c,0x24,0x14);
+      FUN_40232158(iVar5 + 0x14,4,0xc);
+      iVar6 = FUN_40204ca0(1,&iStack_78);
+      if (iVar6 != 0) {
+        *(undefined4 *)(iVar5 + 0x18) = uStack_70;
+        *(undefined4 *)(iVar5 + 0x1c) = uStack_74;
+      }
+      FUN_40232158(iVar5 + 0x20,4,0x10);
+      uVar1 = DAT_4020c408;
+      uVar4 = DAT_40201568;
+      uVar3 = *(uint *)(iVar5 + 0x20);
+      if ((uVar3 != 0xffffffff) && (uVar3 != 0)) {
+        *(uint *)(iVar5 + 0x28) = DAT_40201568;
+        *(uint *)(iVar5 + 0x24) = uVar3 & uVar4 | uVar1;
+      }
+      (*(code *)PTR_FUN_40203efc)(iVar5,PTR_DAT_402361bc);
+      iVar6 = 1;
+    }
+    uVar7 = (*(code *)PTR_FUN_40201c28)(PTR_DAT_402361bc);
+    iVar8 = (*(code *)PTR_FUN_402031f4)(iVar5,PTR_DAT_402361bc,uVar7);
+    if (iVar8 == 0) {
+      (*(code *)PTR_FUN_402015e0)(iVar5 + 0x60,0,0x40);
+      (*(code *)PTR_FUN_40203efc)(iVar5,PTR_DAT_402361b4);
+      iVar6 = 1;
+    }
+    uVar7 = (*(code *)PTR_FUN_40201c28)(PTR_DAT_402361b4);
+    iVar8 = (*(code *)PTR_FUN_402031f4)(iVar5,PTR_DAT_402361b4,uVar7);
+    if (iVar8 != 0) {
+      (*(code *)PTR_FUN_40203efc)(iVar5,PTR_DAT_402361b4);
+      iVar6 = 1;
+    }
+    if (iVar6 == 1) {
+      FUN_4023218c(iVar5,0xa0,0);
+    }
+    (*(code *)PTR_FUN_402015d4)(iVar5,PTR_s_at_init_para_c_402361b8,0x8b);
+  }
+  FUN_40232158(&iStack_6c,8,8);
+  if ((DAT_4022d4fc < iStack_6c) || (iStack_6c < 1)) {
+    FUN_40235914(DAT_402361c0,DAT_402361c0);
+  }
+  else {
+    FUN_40235914(iStack_6c,DAT_402361c0);
+    FUN_40235eac(0,uStack_68);
+    FUN_40235ed4(0,uStack_67);
+    FUN_40235f30(0,uStack_66);
+    FUN_40235f90(0,uStack_65,100);
+  }
+  uVar7 = FUN_40202f40();
+  FUN_4020319c(3);
+  FUN_4020300c(3);
+  FUN_40232158(local_64,8,0x34);
+  uVar4 = 0;
+  do {
+    if (local_64[uVar4] != -1) break;
+    uVar4 = uVar4 + 1 & 0xff;
+  } while (uVar4 != 6);
+  if (uVar4 < 6) {
+    uVar4 = 0;
+    do {
+      if (local_64[uVar4] != '\0') break;
+      uVar4 = uVar4 + 1 & 0xff;
+    } while (uVar4 != 6);
+    if (uVar4 < 6) {
+      FUN_40204df4(0,local_64);
+    }
+  }
+  FUN_40233db4(2,0);
+  FUN_40232158(&iStack_5c,0xc,0x20);
+  if (((iStack_5c != -1) && (iStack_5c != 0)) && (iVar5 = FUN_40204ca0(0,&iStack_78), iVar5 != 0)) {
+    iStack_78 = iStack_5c;
+    uStack_74 = uStack_54;
+    uStack_70 = uStack_58;
+    FUN_40204d20(0,&iStack_78);
+  }
+  FUN_40232158(local_50,8,0x2c);
+  uVar4 = 0;
+  do {
+    if (local_50[uVar4] != -1) break;
+    uVar4 = uVar4 + 1 & 0xff;
+  } while (uVar4 != 6);
+  if (uVar4 < 6) {
+    uVar4 = 0;
+    do {
+      if (local_50[uVar4] != '\0') break;
+      uVar4 = uVar4 + 1 & 0xff;
+    } while (uVar4 != 6);
+    if (uVar4 < 6) {
+      FUN_40204df4(1,local_50);
+    }
+  }
+  FUN_40232158(&iStack_48,0xc,0x14);
+  if (((iStack_48 != -1) && (iStack_48 != 0)) && (iVar5 = FUN_40204ca0(1,&iStack_78), iVar5 != 0)) {
+    iStack_78 = iStack_48;
+    uStack_74 = uStack_40;
+    uStack_70 = uStack_44;
+    FUN_40204d20(1,&iStack_78);
+  }
+  FUN_40232158(&uStack_3c,0xc,0x54);
+  if ((uStack_3c != 0) && (uStack_3c <= DAT_40234010)) {
+    uStack_2c = uStack_38;
+    uStack_28 = uStack_34;
+    iVar5 = FUN_4021f614(auStack_30);
+    if (iVar5 != 0) {
+      FUN_4021f858(uStack_3c);
+    }
+  }
+  FUN_40232158(abStack_24,4,0x3c);
+  FUN_40233db4(0,abStack_24[0] & 1);
+  FUN_40233db4(1,abStack_24[0] >> 1 & 1);
+  FUN_4020319c(uVar7);
+  FUN_40232158(auStack_20,0x14,0x40);
+  FUN_40231358(auStack_20);
+  return 0x80;
+}
+
+
+ASSEMBLY
+402361c4  addi a1,a1,-0x80
+402361c7  s32i a12,a1,0x78
+402361ca  s32i a13,a1,0x7c
+402361cd  s32i a0,a1,0x74
+402361d0  call0 0x40202198 ; UNCONDITIONAL_CALL 40202198
+402361d3  movi a0,0x3d
+402361d6  l32r a3,0x4023212c ; READ 4023212c
+402361d9  beqz a2,0x40236203 ; CONDITIONAL_JUMP 40236203
+402361dc  bnei a2,0x1,0x402361e5 ; CONDITIONAL_JUMP 402361e5
+402361df  movi a0,0x1d
+402361e2  j 0x40236203 ; UNCONDITIONAL_JUMP 40236203
+402361e5  addi a4,a2,-0x2
+402361e8  beqz a4,0x402364e7 ; CONDITIONAL_JUMP 402364e7
+402361eb  addi a5,a2,-0x3
+402361ee  beqz a5,0x402364e7 ; CONDITIONAL_JUMP 402364e7
+402361f1  addi a6,a2,-0x4
+402361f4  beqz a6,0x402364e7 ; CONDITIONAL_JUMP 402364e7
+402361f7  addi a7,a2,-0x5
+402361fa  beqz a7,0x402364ed ; CONDITIONAL_JUMP 402364ed
+402361fd  addi a8,a2,-0x6
+40236200  beqz a8,0x402364ed ; CONDITIONAL_JUMP 402364ed
+40236203  mov a2,a1
+40236206  s16i a0,a3,0x0 ; WRITE 3ffe8380
+40236209  movi.n a4,0x0
+4023620b  movi.n a3,0x8
+4023620d  call0 0x40232158 ; UNCONDITIONAL_CALL 40232158
+40236210  mov.n a2,a1
+40236212  l32r a3,0x402361b4 ; READ 402361b4 ; PARAM 3ffea8e0
+40236215  l32r a0,0x4022eaf4 ; READ 4022eaf4
+40236218  callx0 a0 ; COMPUTED_CALL 40002aa8
+4023621b  beqz a2,0x40236329 ; CONDITIONAL_JUMP 40236329
+4023621e  movi a2,0xa0
+40236221  l32r a3,0x402361b8 ; READ 402361b8 ; PARAM 4025ce20
+40236224  movi.n a4,0x5c
+40236226  l32r a0,0x402015c4 ; READ 402015c4
+40236229  callx0 a0 ; COMPUTED_CALL 40100da8
+4023622c  mov.n a12,a2
+4023622e  movi a3,0xa0
+40236231  movi.n a4,0x0
+40236233  call0 0x40232158 ; UNCONDITIONAL_CALL 40232158
+40236236  mov.n a2,a1
+40236238  l32r a3,0x402361b4 ; READ 402361b4 ; PARAM 3ffea8e0
+4023623b  movi.n a4,0x3
+4023623d  l32r a0,0x402031f4 ; READ 402031f4
+40236240  callx0 a0 ; COMPUTED_CALL 400018d4
+40236243  beqz a2,0x402362b2 ; CONDITIONAL_JUMP 402362b2
+40236246  mov.n a2,a12
+40236248  movi.n a3,0x0
+4023624a  movi a4,0xa0
+4023624d  l32r a0,0x402015e0 ; READ 402015e0
+40236250  callx0 a0 ; COMPUTED_CALL 400018a4
+40236253  addi.n a2,a12,0x8
+40236255  movi.n a3,0xc
+40236257  movi.n a4,0x0
+40236259  call0 0x40232158 ; UNCONDITIONAL_CALL 40232158
+4023625c  addi a2,a12,0x2c
+4023625f  movi.n a3,0x24
+40236261  movi.n a4,0x14
+40236263  call0 0x40232158 ; UNCONDITIONAL_CALL 40232158
+40236266  addi a2,a12,0x14
+40236269  movi.n a3,0x4
+4023626b  movi.n a4,0xc
+4023626d  call0 0x40232158 ; UNCONDITIONAL_CALL 40232158
+40236270  movi.n a2,0x1
+40236272  addi.n a3,a1,0x8
+40236274  call0 0x40204ca0 ; UNCONDITIONAL_CALL 40204ca0
+40236277  beqz.n a2,0x40236281 ; CONDITIONAL_JUMP 40236281
+40236279  l32i.n a9,a1,0xc
+4023627b  l32i.n a10,a1,0x10
+4023627d  s32i.n a10,a12,0x18
+4023627f  s32i.n a9,a12,0x1c
+40236281  addi a2,a12,0x20
+40236284  movi.n a3,0x4
+40236286  movi.n a4,0x10
+40236288  call0 0x40232158 ; UNCONDITIONAL_CALL 40232158
+4023628b  l32i.n a0,a12,0x20
+4023628d  beqi a0,0xffffffff,0x402362a2 ; CONDITIONAL_JUMP 402362a2
+40236290  beqz.n a0,0x402362a2 ; CONDITIONAL_JUMP 402362a2
+40236292  l32r a13,0x4020c408 ; READ 4020c408
+40236295  l32r a11,0x40201568 ; READ 40201568
+40236298  s32i.n a11,a12,0x28
+4023629a  and a11,a0,a11
+4023629d  or a11,a11,a13
+402362a0  s32i.n a11,a12,0x24
+402362a2  mov.n a2,a12
+402362a4  l32r a3,0x402361bc ; READ 402361bc ; PARAM 3ffea8e8
+402362a7  l32r a0,0x40203efc ; READ 40203efc
+402362aa  callx0 a0 ; COMPUTED_CALL 40002a88
+402362ad  movi.n a13,0x1
+402362af  j 0x402362b4 ; UNCONDITIONAL_JUMP 402362b4
+402362b2  movi.n a13,0x0
+402362b4  l32r a2,0x402361bc ; READ 402361bc ; PARAM 3ffea8e8
+402362b7  l32r a0,0x40201c28 ; READ 40201c28
+402362ba  callx0 a0 ; COMPUTED_CALL 40002ac8
+402362bd  mov a4,a2
+402362c0  l32r a3,0x402361bc ; READ 402361bc ; PARAM 3ffea8e8
+402362c3  mov a2,a12
+402362c6  l32r a0,0x402031f4 ; READ 402031f4
+402362c9  callx0 a0 ; COMPUTED_CALL 400018d4
+402362cc  bnez a2,0x402362e9 ; CONDITIONAL_JUMP 402362e9
+402362cf  addi a2,a12,0x60
+402362d2  movi.n a3,0x0
+402362d4  movi.n a4,0x40
+402362d6  l32r a0,0x402015e0 ; READ 402015e0
+402362d9  callx0 a0 ; COMPUTED_CALL 400018a4
+402362dc  mov.n a2,a12
+402362de  l32r a3,0x402361b4 ; READ 402361b4 ; PARAM 3ffea8e0
+402362e1  l32r a0,0x40203efc ; READ 40203efc
+402362e4  callx0 a0 ; COMPUTED_CALL 40002a88
+402362e7  movi.n a13,0x1
+402362e9  l32r a2,0x402361b4 ; READ 402361b4 ; PARAM 3ffea8e0
+402362ec  l32r a0,0x40201c28 ; READ 40201c28
+402362ef  callx0 a0 ; COMPUTED_CALL 40002ac8
+402362f2  mov.n a4,a2
+402362f4  l32r a3,0x402361b4 ; READ 402361b4 ; PARAM 3ffea8e0
+402362f7  mov.n a2,a12
+402362f9  l32r a0,0x402031f4 ; READ 402031f4
+402362fc  callx0 a0 ; COMPUTED_CALL 400018d4
+402362ff  beqz.n a2,0x4023630e ; CONDITIONAL_JUMP 4023630e
+40236301  mov.n a2,a12
+40236303  l32r a3,0x402361b4 ; READ 402361b4 ; PARAM 3ffea8e0
+40236306  l32r a0,0x40203efc ; READ 40203efc
+40236309  callx0 a0 ; COMPUTED_CALL 40002a88
+4023630c  movi.n a13,0x1
+4023630e  bnei a13,0x1,0x4023631b ; CONDITIONAL_JUMP 4023631b
+40236311  mov.n a2,a12
+40236313  movi a3,0xa0
+40236316  movi.n a4,0x0
+40236318  call0 0x4023218c ; UNCONDITIONAL_CALL 4023218c
+4023631b  mov.n a2,a12
+4023631d  l32r a3,0x402361b8 ; READ 402361b8 ; PARAM 4025ce20
+40236320  movi a4,0x8b
+40236323  l32r a0,0x402015d4 ; READ 402015d4
+40236326  callx0 a0 ; COMPUTED_CALL 40100d20
+40236329  addi a2,a1,0x14
+4023632c  movi a3,0x8
+4023632f  movi a4,0x8
+40236332  call0 0x40232158 ; UNCONDITIONAL_CALL 40232158
+40236335  l32i.n a2,a1,0x14
+40236337  l32r a12,0x4022d4fc ; READ 4022d4fc
+4023633a  bge a12,a2,0x40236340 ; CONDITIONAL_JUMP 40236340
+4023633d  j 0x402364d8 ; UNCONDITIONAL_JUMP 402364d8
+40236340  bgei a2,0x1,0x40236346 ; CONDITIONAL_JUMP 40236346
+40236343  j 0x402364d8 ; UNCONDITIONAL_JUMP 402364d8
+40236346  l32r a3,0x402361c0 ; READ 402361c0
+40236349  call0 0x40235914 ; UNCONDITIONAL_CALL 40235914
+4023634c  movi.n a2,0x0
+4023634e  l8ui a3,a1,0x18
+40236351  call0 0x40235eac ; UNCONDITIONAL_CALL 40235eac
+40236354  movi.n a2,0x0
+40236356  l8ui a3,a1,0x19
+40236359  call0 0x40235ed4 ; UNCONDITIONAL_CALL 40235ed4
+4023635c  movi.n a2,0x0
+4023635e  l8ui a3,a1,0x1a
+40236361  call0 0x40235f30 ; UNCONDITIONAL_CALL 40235f30
+40236364  movi.n a2,0x0
+40236366  l8ui a3,a1,0x1b
+40236369  movi a4,0x64
+4023636c  call0 0x40235f90 ; UNCONDITIONAL_CALL 40235f90
+4023636f  call0 0x40202f40 ; UNCONDITIONAL_CALL 40202f40
+40236372  mov.n a13,a2
+40236374  movi.n a2,0x3
+40236376  call0 0x4020319c ; UNCONDITIONAL_CALL 4020319c
+40236379  movi.n a2,0x3
+4023637b  call0 0x4020300c ; UNCONDITIONAL_CALL 4020300c
+4023637e  addi a2,a1,0x1c
+40236381  movi.n a3,0x8
+40236383  movi.n a4,0x34
+40236385  call0 0x40232158 ; UNCONDITIONAL_CALL 40232158
+40236388  movi.n a0,0x0
+4023638a  addi a2,a1,0x1c
+4023638d  movi a12,0xff
+40236390  add.n a3,a0,a2
+40236392  l8ui a3,a3,0x0 ; DATA Stack[-0x64]
+40236395  bne a3,a12,0x402363a0 ; CONDITIONAL_JUMP 402363a0
+40236398  addi.n a0,a0,0x1
+4023639a  extui a0,a0,0x0,0x8
+4023639d  bnei a0,0x6,0x40236390 ; CONDITIONAL_JUMP 40236390
+402363a0  bgeui a0,0x6,0x402363c0 ; CONDITIONAL_JUMP 402363c0
+402363a3  movi.n a0,0x0
+402363a5  add.n a3,a0,a2
+402363a7  l8ui a3,a3,0x0 ; DATA Stack[-0x64]
+402363aa  bnez.n a3,0x402363b4 ; CONDITIONAL_JUMP 402363b4
+402363ac  addi.n a0,a0,0x1
+402363ae  extui a0,a0,0x0,0x8
+402363b1  bnei a0,0x6,0x402363a5 ; CONDITIONAL_JUMP 402363a5
+402363b4  bgeui a0,0x6,0x402363c0 ; CONDITIONAL_JUMP 402363c0
+402363b7  movi a2,0x0
+402363ba  addi a3,a1,0x1c
+402363bd  call0 0x40204df4 ; UNCONDITIONAL_CALL 40204df4
+402363c0  movi a2,0x2
+402363c3  movi.n a3,0x0
+402363c5  call0 0x40233db4 ; UNCONDITIONAL_CALL 40233db4
+402363c8  addi a2,a1,0x24
+402363cb  movi.n a3,0xc
+402363cd  movi.n a4,0x20
+402363cf  call0 0x40232158 ; UNCONDITIONAL_CALL 40232158
+402363d2  l32i.n a0,a1,0x24
+402363d4  beqi a0,0xffffffff,0x402363f5 ; CONDITIONAL_JUMP 402363f5
+402363d7  beqz.n a0,0x402363f5 ; CONDITIONAL_JUMP 402363f5
+402363d9  movi.n a2,0x0
+402363db  addi.n a3,a1,0x8
+402363dd  call0 0x40204ca0 ; UNCONDITIONAL_CALL 40204ca0
+402363e0  beqz.n a2,0x402363f5 ; CONDITIONAL_JUMP 402363f5
+402363e2  l32i.n a3,a1,0x28
+402363e4  l32i.n a2,a1,0x2c
+402363e6  l32i.n a4,a1,0x24
+402363e8  s32i.n a4,a1,0x8
+402363ea  s32i.n a2,a1,0xc
+402363ec  s32i.n a3,a1,0x10
+402363ee  movi.n a2,0x0
+402363f0  addi.n a3,a1,0x8
+402363f2  call0 0x40204d20 ; UNCONDITIONAL_CALL 40204d20
+402363f5  addi a2,a1,0x30
+402363f8  movi.n a3,0x8
+402363fa  movi.n a4,0x2c
+402363fc  call0 0x40232158 ; UNCONDITIONAL_CALL 40232158
+402363ff  movi.n a0,0x0
+40236401  addi a2,a1,0x30
+40236404  add.n a5,a0,a2
+40236406  l8ui a5,a5,0x0 ; DATA Stack[-0x50]
+40236409  bne a5,a12,0x40236414 ; CONDITIONAL_JUMP 40236414
+4023640c  addi.n a0,a0,0x1
+4023640e  extui a0,a0,0x0,0x8
+40236411  bnei a0,0x6,0x40236404 ; CONDITIONAL_JUMP 40236404
+40236414  bgeui a0,0x6,0x40236434 ; CONDITIONAL_JUMP 40236434
+40236417  movi.n a0,0x0
+40236419  add.n a3,a0,a2
+4023641b  l8ui a3,a3,0x0 ; DATA Stack[-0x50]
+4023641e  bnez.n a3,0x40236428 ; CONDITIONAL_JUMP 40236428
+40236420  addi.n a0,a0,0x1
+40236422  extui a0,a0,0x0,0x8
+40236425  bnei a0,0x6,0x40236419 ; CONDITIONAL_JUMP 40236419
+40236428  bgeui a0,0x6,0x40236434 ; CONDITIONAL_JUMP 40236434
+4023642b  movi a2,0x1
+4023642e  addi a3,a1,0x30
+40236431  call0 0x40204df4 ; UNCONDITIONAL_CALL 40204df4
+40236434  addi a2,a1,0x38
+40236437  movi a3,0xc
+4023643a  movi a4,0x14
+4023643d  call0 0x40232158 ; UNCONDITIONAL_CALL 40232158
+40236440  l32i.n a0,a1,0x38
+40236442  beqi a0,0xffffffff,0x40236464 ; CONDITIONAL_JUMP 40236464
+40236445  beqz.n a0,0x40236464 ; CONDITIONAL_JUMP 40236464
+40236447  movi.n a2,0x1
+40236449  addi.n a3,a1,0x8
+4023644b  call0 0x40204ca0 ; UNCONDITIONAL_CALL 40204ca0
+4023644e  beqz.n a2,0x40236464 ; CONDITIONAL_JUMP 40236464
+40236450  l32i.n a3,a1,0x3c
+40236452  l32i a2,a1,0x40
+40236455  l32i.n a4,a1,0x38
+40236457  s32i.n a4,a1,0x8
+40236459  s32i.n a2,a1,0xc
+4023645b  s32i.n a3,a1,0x10
+4023645d  movi.n a2,0x1
+4023645f  addi.n a3,a1,0x8
+40236461  call0 0x40204d20 ; UNCONDITIONAL_CALL 40204d20
+40236464  addi a2,a1,0x44
+40236467  movi.n a3,0xc
+40236469  movi.n a4,0x54
+4023646b  call0 0x40232158 ; UNCONDITIONAL_CALL 40232158
+4023646e  l32i a0,a1,0x44
+40236471  beqz.n a0,0x40236493 ; CONDITIONAL_JUMP 40236493
+40236473  l32r a5,0x40234010 ; READ 40234010
+40236476  bltu a5,a0,0x40236493 ; CONDITIONAL_JUMP 40236493
+40236479  addi a2,a1,0x50
+4023647c  l32i a6,a1,0x4c
+4023647f  l32i a7,a1,0x48
+40236482  s32i a7,a1,0x54
+40236485  s32i a6,a1,0x58
+40236488  call0 0x4021f614 ; UNCONDITIONAL_CALL 4021f614
+4023648b  beqz.n a2,0x40236493 ; CONDITIONAL_JUMP 40236493
+4023648d  l32i a2,a1,0x44
+40236490  call0 0x4021f858 ; UNCONDITIONAL_CALL 4021f858
+40236493  addi a2,a1,0x5c
+40236496  movi.n a3,0x4
+40236498  movi.n a4,0x3c
+4023649a  call0 0x40232158 ; UNCONDITIONAL_CALL 40232158
+4023649d  l8ui a3,a1,0x5c
+402364a0  movi.n a2,0x0
+402364a2  extui a3,a3,0x0,0x1
+402364a5  call0 0x40233db4 ; UNCONDITIONAL_CALL 40233db4
+402364a8  l8ui a3,a1,0x5c
+402364ab  movi.n a2,0x1
+402364ad  extui a3,a3,0x1,0x1
+402364b0  call0 0x40233db4 ; UNCONDITIONAL_CALL 40233db4
+402364b3  mov.n a2,a13
+402364b5  call0 0x4020319c ; UNCONDITIONAL_CALL 4020319c
+402364b8  addi a2,a1,0x60
+402364bb  movi.n a3,0x14
+402364bd  movi.n a4,0x40
+402364bf  call0 0x40232158 ; UNCONDITIONAL_CALL 40232158
+402364c2  addi a2,a1,0x60
+402364c5  call0 0x40231358 ; UNCONDITIONAL_CALL 40231358
+402364c8  l32i a12,a1,0x78
+402364cb  l32i a13,a1,0x7c
+402364ce  movi a2,0x80
+402364d1  l32i a0,a1,0x74
+402364d4  add.n a1,a1,a2
+402364d6  ret.n
+402364d8  l32r a2,0x402361c0 ; READ 402361c0
+402364db  l32r a3,0x402361c0 ; READ 402361c0
+402364de  call0 0x40235914 ; UNCONDITIONAL_CALL 40235914
+402364e1  j 0x4023636f ; UNCONDITIONAL_JUMP 4023636f
+402364e7  movi a0,0x7d
+402364ea  j 0x40236203 ; UNCONDITIONAL_JUMP 40236203
+402364ed  movi a0,0xfd
+402364f0  j 0x40236203 ; UNCONDITIONAL_JUMP 40236203

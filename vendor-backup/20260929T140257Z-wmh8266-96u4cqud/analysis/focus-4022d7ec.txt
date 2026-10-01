@@ -1,0 +1,75 @@
+REQUEST 4022d7ec
+XREF 4022d931 UNCONDITIONAL_CALL
+FUNCTION 4022d7ec at_builtin_command_lookup __call0
+CALLER 4022d931 UNCONDITIONAL_CALL
+
+/* 0x18-byte records, exact command length and ROM comparison; not an HTTP form parser. */
+
+int __call0 at_builtin_command_lookup(int param_1,int param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  undefined *puVar3;
+  int iVar4;
+  
+  if (param_2 != 0) {
+    if (param_1 == 0) {
+      return 0;
+    }
+    iVar4 = 0x47;
+    iVar2 = 1;
+    puVar3 = PTR_DAT_4022d650;
+    do {
+      if ((*(int *)((int)(puVar3 + iVar2 * 0x18) + 4) == param_1) &&
+         (iVar1 = (*(code *)PTR_FUN_402031f4)
+                            (param_2,*(undefined4 *)(puVar3 + iVar2 * 0x18),param_1), iVar1 == 0)) {
+        return iVar2;
+      }
+      iVar2 = (iVar2 + 1) * 0x10000 >> 0x10;
+    } while (iVar2 != iVar4);
+  }
+  return -1;
+}
+
+
+ASSEMBLY
+4022d7ec  addi a1,a1,-0x20
+4022d7ef  s32i.n a12,a1,0x8
+4022d7f1  s32i.n a14,a1,0x10
+4022d7f3  s32i.n a15,a1,0x14
+4022d7f5  s32i.n a13,a1,0xc
+4022d7f7  s32i.n a0,a1,0x4
+4022d7f9  mov.n a13,a2
+4022d7fb  beqz.n a3,0x4022d831 ; CONDITIONAL_JUMP 4022d831
+4022d7fd  bnez.n a2,0x4022d804 ; CONDITIONAL_JUMP 4022d804
+4022d7ff  movi.n a2,0x0
+4022d801  j 0x4022d833 ; UNCONDITIONAL_JUMP 4022d833
+4022d804  movi.n a15,0x47
+4022d806  l32r a14,0x4022d650 ; READ 4022d650
+4022d809  movi.n a12,0x1
+4022d80b  s32i.n a3,a1,0x0 ; DATA Stack[-0x20]
+4022d80d  addx2 a0,a12,a12
+4022d810  addx8 a0,a0,a14
+4022d813  l32i.n a2,a0,0x4 ; READ 4025c42c ; READ 4025c444
+4022d815  bne a2,a13,0x4022d826 ; CONDITIONAL_JUMP 4022d826
+4022d818  l32i.n a2,a1,0x0 ; DATA Stack[-0x20]
+4022d81a  mov.n a4,a13
+4022d81c  l32i.n a3,a0,0x0 ; READ 4025c428 ; PARAM 3ffe9e60 ; READ 4025c440 ; PARAM 3ffe9abc
+4022d81e  l32r a0,0x402031f4 ; READ 402031f4
+4022d821  callx0 a0 ; COMPUTED_CALL 400018d4
+4022d824  beqz.n a2,0x4022d842 ; CONDITIONAL_JUMP 4022d842
+4022d826  addi.n a12,a12,0x1
+4022d828  slli a12,a12,0x10
+4022d82b  srai a12,a12,0x10
+4022d82e  bne a12,a15,0x4022d80d ; CONDITIONAL_JUMP 4022d80d
+4022d831  movi.n a2,0xff
+4022d833  l32i.n a12,a1,0x8
+4022d835  l32i.n a13,a1,0xc
+4022d837  l32i.n a14,a1,0x10
+4022d839  l32i.n a15,a1,0x14
+4022d83b  l32i.n a0,a1,0x4
+4022d83d  addi a1,a1,0x20
+4022d840  ret.n
+4022d842  mov.n a2,a12
+4022d844  j 0x4022d833 ; UNCONDITIONAL_JUMP 4022d833

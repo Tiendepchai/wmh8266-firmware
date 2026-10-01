@@ -1,0 +1,24 @@
+REQUEST 40232944
+XREF 40101cd5 COMPUTED_CALL
+XREF 40101764 DATA
+FUNCTION 40232944 FUN_40232944 __call0
+CALLER 40101cd5 COMPUTED_CALL
+CALLER 40101764 DATA
+
+void __call0 FUN_40232944(undefined4 param_1,undefined4 param_2)
+
+{
+  undefined *puVar1;
+  
+  puVar1 = PTR_DAT_4023223c;
+  *(undefined4 *)(PTR_DAT_4023223c + 0x24) = param_1;
+  *(undefined4 *)(puVar1 + 0x28) = param_2;
+  return;
+}
+
+
+ASSEMBLY
+40232944  l32r a4,0x4023223c ; READ 4023223c
+40232947  s32i.n a2,a4,0x24 ; WRITE 3fff1d74
+40232949  s32i.n a3,a4,0x28 ; WRITE 3fff1d78
+4023294b  ret.n

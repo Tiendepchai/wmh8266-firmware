@@ -1,0 +1,140 @@
+REQUEST 40220b78
+XREF 4022684f UNCONDITIONAL_CALL
+FUNCTION 40220b78 FUN_40220b78 __call0
+CALLER 4022684f UNCONDITIONAL_CALL
+
+uint __call0 FUN_40220b78(int param_1)
+
+{
+  undefined2 uVar1;
+  undefined *puVar2;
+  int *piVar3;
+  int iVar4;
+  uint uVar5;
+  int iVar6;
+  undefined2 *puVar7;
+  uint local_20;
+  
+  piVar3 = (int *)(*(code *)PTR_FUN_402015c4)(100,PTR_s_espconn_tcp_c_402201b4,0x385);
+  if (piVar3 != (int *)0x0) {
+    iVar4 = *(int *)(param_1 + 8);
+    local_20 = (uint)*(ushort *)(iVar4 + 0xc) |
+               (uint)*(byte *)(iVar4 + 0xe) << 0x10 | (uint)*(byte *)(iVar4 + 0xf) << 0x18;
+    iVar4 = FUN_40224dc8();
+    if (iVar4 != 0) {
+      FUN_402266bc(PTR_DAT_40220644,piVar3);
+      FUN_40224ddc(iVar4,piVar3);
+      FUN_40224df0(iVar4,PTR_LAB_40220b70);
+      puVar2 = PTR_DAT_4021d994;
+      *piVar3 = param_1;
+      iVar6 = *(int *)(param_1 + 8);
+      piVar3[0x15] = 0;
+      uVar1 = *(undefined2 *)(iVar6 + 4);
+      *(undefined4 *)(param_1 + 4) = 1;
+      piVar3[1] = iVar4;
+      FUN_40224588(iVar4,puVar2,uVar1);
+      puVar2 = PTR_FUN_40220b74;
+      puVar7 = *(undefined2 **)(*piVar3 + 8);
+      *(undefined1 *)((int)piVar3 + 0x51) = 2;
+      uVar5 = FUN_40224764(iVar4,&local_20,*puVar7,puVar2);
+      *(char *)((int)piVar3 + 0x26) = (char)uVar5;
+      if ((uVar5 & 0xff) != 0xfc) {
+        return uVar5;
+      }
+      FUN_402266dc(PTR_DAT_40220644,piVar3);
+      FUN_40220314(*(undefined2 *)(iVar4 + 0x20));
+      (*(code *)PTR_FUN_402015d4)(piVar3,PTR_s_espconn_tcp_c_402201b4,0x3b6);
+      return 0xfffffffc;
+    }
+    (*(code *)PTR_FUN_402015d4)(piVar3,PTR_s_espconn_tcp_c_402201b4,0x395);
+  }
+  return 0xffffffff;
+}
+
+
+ASSEMBLY
+40220b78  l32r a3,0x402201b4 ; READ 402201b4 ; PARAM 4025be00
+40220b7b  movi a4,0x385
+40220b7e  addi a1,a1,-0x20
+40220b81  s32i a12,a1,0x8
+40220b84  s32i a13,a1,0xc
+40220b87  s32i a14,a1,0x10
+40220b8a  s32i.n a0,a1,0x4
+40220b8c  mov.n a14,a2
+40220b8e  movi a2,0x64
+40220b91  l32r a0,0x402015c4 ; READ 402015c4
+40220b94  callx0 a0 ; COMPUTED_CALL 40100da8
+40220b97  mov.n a12,a2
+40220b99  beqz.n a2,0x40220bd2 ; CONDITIONAL_JUMP 40220bd2
+40220b9b  l32i.n a2,a14,0x8
+40220b9d  l8ui a3,a2,0xd
+40220ba0  l8ui a0,a2,0xc
+40220ba3  slli a3,a3,0x8
+40220ba6  or a0,a0,a3
+40220ba9  l8ui a3,a2,0xf
+40220bac  l8ui a2,a2,0xe
+40220baf  slli a3,a3,0x18
+40220bb2  slli a2,a2,0x10
+40220bb5  or a2,a2,a3
+40220bb8  or a0,a0,a2
+40220bbb  s32i.n a0,a1,0x0 ; DATA Stack[-0x20]
+40220bbd  call0 0x40224dc8 ; UNCONDITIONAL_CALL 40224dc8
+40220bc0  mov.n a13,a2
+40220bc2  bnez.n a2,0x40220be1 ; CONDITIONAL_JUMP 40220be1
+40220bc4  mov.n a2,a12
+40220bc6  l32r a3,0x402201b4 ; READ 402201b4 ; PARAM 4025be00
+40220bc9  movi a4,0x395
+40220bcc  l32r a0,0x402015d4 ; READ 402015d4
+40220bcf  callx0 a0 ; COMPUTED_CALL 40100d20
+40220bd2  movi.n a2,0xff
+40220bd4  l32i.n a12,a1,0x8
+40220bd6  l32i.n a13,a1,0xc
+40220bd8  l32i.n a14,a1,0x10
+40220bda  l32i.n a0,a1,0x4
+40220bdc  addi a1,a1,0x20
+40220bdf  ret.n
+40220be1  l32r a2,0x40220644 ; READ 40220644 ; PARAM 3fff1970
+40220be4  mov a3,a12
+40220be7  call0 0x402266bc ; UNCONDITIONAL_CALL 402266bc
+40220bea  mov a2,a13
+40220bed  mov.n a3,a12
+40220bef  call0 0x40224ddc ; UNCONDITIONAL_CALL 40224ddc
+40220bf2  mov.n a2,a13
+40220bf4  l32r a3,0x40220b70 ; READ 40220b70 ; PARAM 40220a34
+40220bf7  call0 0x40224df0 ; UNCONDITIONAL_CALL 40224df0
+40220bfa  mov.n a2,a13
+40220bfc  l32r a3,0x4021d994 ; READ 4021d994 ; PARAM 4025bebc
+40220bff  s32i.n a14,a12,0x0
+40220c01  movi.n a5,0x1
+40220c03  l32i.n a4,a14,0x8
+40220c05  movi.n a6,0x0
+40220c07  s32i a6,a12,0x54
+40220c0a  l16ui a4,a4,0x4
+40220c0d  s32i.n a5,a14,0x4
+40220c0f  s32i.n a13,a12,0x4
+40220c11  call0 0x40224588 ; UNCONDITIONAL_CALL 40224588
+40220c14  mov.n a2,a13
+40220c16  mov.n a3,a1
+40220c18  l32r a5,0x40220b74 ; READ 40220b74 ; PARAM 40220ac0
+40220c1b  l32i.n a4,a12,0x0
+40220c1d  movi.n a6,0x2
+40220c1f  l32i.n a4,a4,0x8
+40220c21  s8i a6,a12,0x51
+40220c24  l16ui a4,a4,0x0
+40220c27  call0 0x40224764 ; UNCONDITIONAL_CALL 40224764
+40220c2a  s8i a2,a12,0x26
+40220c2d  movi a6,0xfc
+40220c30  extui a5,a2,0x0,0x8
+40220c33  bne a5,a6,0x40220bd4 ; CONDITIONAL_JUMP 40220bd4
+40220c36  l32r a2,0x40220644 ; READ 40220644 ; PARAM 3fff1970
+40220c39  mov.n a3,a12
+40220c3b  call0 0x402266dc ; UNCONDITIONAL_CALL 402266dc
+40220c3e  l16ui a2,a13,0x20
+40220c41  call0 0x40220314 ; UNCONDITIONAL_CALL 40220314
+40220c44  mov.n a2,a12
+40220c46  l32r a3,0x402201b4 ; READ 402201b4 ; PARAM 4025be00
+40220c49  movi a4,0x3b6
+40220c4c  l32r a0,0x402015d4 ; READ 402015d4
+40220c4f  callx0 a0 ; COMPUTED_CALL 40100d20
+40220c52  movi.n a2,0xfc
+40220c54  j 0x40220bd4 ; UNCONDITIONAL_JUMP 40220bd4

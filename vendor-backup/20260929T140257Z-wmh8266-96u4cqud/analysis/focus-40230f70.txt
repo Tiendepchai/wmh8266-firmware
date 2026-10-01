@@ -1,0 +1,91 @@
+REQUEST 40230f70
+FUNCTION 40230f70 at_cipsto_set __call0
+
+/* WARNING: Type propagation algorithm not settling */
+/* Accepts range 0..7200, writes runtime timeout at 0x3ffe8378, then calls 0x40226d04. Initial flash
+   value is 180, not 3. */
+
+void __call0 at_cipsto_set(undefined4 param_1,int param_2)
+
+{
+  undefined *puVar1;
+  int iVar2;
+  uint auStack_20 [2];
+  int aiStack_c [3];
+  
+  auStack_20[0] = 0;
+  auStack_20[1] = 0;
+  aiStack_c[0] = param_2;
+  if (PTR_DAT_4022db30[0x30] == '\0') {
+    FUN_4022d7d4();
+  }
+  else if (param_2 == 0) {
+    FUN_4022d7d4();
+  }
+  else {
+    aiStack_c[0] = param_2 + 1;
+    iVar2 = at_parse_integer(aiStack_c,auStack_20,auStack_20 + 1);
+    puVar1 = PTR_DAT_4022db30;
+    if (iVar2 == 0) {
+      if ((DAT_4022ea98 < (int)auStack_20[0]) || ((int)auStack_20[0] < 0)) {
+        FUN_4022d7d4();
+      }
+      else {
+        if (*(uint *)(PTR_DAT_4022db34 + 4) != auStack_20[0]) {
+          *(uint *)(PTR_DAT_4022db34 + 4) = auStack_20[0];
+          espconn_set_idle_timeout(*(byte **)(puVar1 + 0x34),auStack_20[0],0);
+        }
+        FUN_4022d7b8();
+      }
+    }
+    else {
+      FUN_4022d7d4();
+    }
+  }
+  return;
+}
+
+
+ASSEMBLY
+40230f70  movi a4,0x0
+40230f73  addi a1,a1,-0x20
+40230f76  s32i a0,a1,0x8
+40230f79  l32r a0,0x4022db30 ; READ 4022db30
+40230f7c  s32i a4,a1,0x0
+40230f7f  l8ui a2,a0,0x30
+40230f82  s32i.n a4,a1,0x4
+40230f84  bnez.n a2,0x40230f8e ; CONDITIONAL_JUMP 40230f8e
+40230f86  s32i.n a3,a1,0x14
+40230f88  call0 0x4022d7d4 ; UNCONDITIONAL_CALL 4022d7d4
+40230f8b  j 0x40230fd8 ; UNCONDITIONAL_JUMP 40230fd8
+40230f8e  bnez.n a3,0x40230f9b ; CONDITIONAL_JUMP 40230f9b
+40230f90  s32i.n a3,a1,0x14
+40230f92  call0 0x4022d7d4 ; UNCONDITIONAL_CALL 4022d7d4
+40230f95  j 0x40230fd8 ; UNCONDITIONAL_JUMP 40230fd8
+40230f9b  addi a2,a1,0x14
+40230f9e  addi a3,a3,0x1
+40230fa1  addi a4,a1,0x4
+40230fa4  s32i a3,a1,0x14
+40230fa7  mov.n a3,a1
+40230fa9  call0 0x4022da48 ; UNCONDITIONAL_CALL 4022da48
+40230fac  beqz.n a2,0x40230fb4 ; CONDITIONAL_JUMP 40230fb4
+40230fae  call0 0x4022d7d4 ; UNCONDITIONAL_CALL 4022d7d4
+40230fb1  j 0x40230fd8 ; UNCONDITIONAL_JUMP 40230fd8
+40230fb4  l32i a3,a1,0x0
+40230fb7  l32r a4,0x4022ea98 ; READ 4022ea98
+40230fba  blt a4,a3,0x40230fdf ; CONDITIONAL_JUMP 40230fdf
+40230fbd  bltz a3,0x40230fdf ; CONDITIONAL_JUMP 40230fdf
+40230fc0  l32r a0,0x4022db34 ; READ 4022db34
+40230fc3  l32i a5,a0,0x4
+40230fc6  beq a5,a3,0x40230fd5 ; CONDITIONAL_JUMP 40230fd5
+40230fc9  movi.n a4,0x0
+40230fcb  l32r a2,0x4022db30 ; READ 4022db30
+40230fce  s32i.n a3,a0,0x4
+40230fd0  l32i.n a2,a2,0x34
+40230fd2  call0 0x40226d04 ; UNCONDITIONAL_CALL 40226d04
+40230fd5  call0 0x4022d7b8 ; UNCONDITIONAL_CALL 4022d7b8
+40230fd8  l32i.n a0,a1,0x8
+40230fda  addi a1,a1,0x20
+40230fdd  ret.n
+40230fdf  call0 0x4022d7d4 ; UNCONDITIONAL_CALL 4022d7d4
+40230fe2  j 0x40230fd8 ; UNCONDITIONAL_JUMP 40230fd8

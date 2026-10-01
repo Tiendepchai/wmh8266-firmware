@@ -1,0 +1,100 @@
+REQUEST 40106698
+XREF 4010674c UNCONDITIONAL_CALL
+XREF 4010676c UNCONDITIONAL_CALL
+FUNCTION 40106698 uart_fifo_drain __call0
+CALLER 4010674c UNCONDITIONAL_CALL
+CALLER 4010676c UNCONDITIONAL_CALL
+
+/* Byte writes to 0x60000000 + uart_index*0xf00. This is UART FIFO, not relay GPIO. */
+
+void __call0 uart_fifo_drain(ushort *param_1,uint param_2,short param_3)
+
+{
+  byte bVar1;
+  byte *pbVar2;
+  uint uVar3;
+  uint uVar4;
+  int iVar5;
+  byte *pbVar6;
+  
+  if (param_1 != (ushort *)0x0) {
+    if (param_2 == 0) {
+      pbVar6 = *(byte **)(param_1 + 2);
+      pbVar2 = *(byte **)(param_1 + 6);
+      uVar4 = (uint)*param_1;
+    }
+    else {
+      pbVar2 = *(byte **)(param_1 + 6);
+      uVar3 = 0;
+      iVar5 = (int)(short)DAT_40101f54 * (int)param_3 + DAT_40100468;
+      do {
+        bVar1 = *pbVar2;
+        *(byte **)(param_1 + 6) = pbVar2 + 1;
+        memw();
+        *(uint *)(iVar5 + 0x200) = (uint)bVar1;
+        pbVar6 = *(byte **)(param_1 + 2);
+        uVar4 = (uint)*param_1;
+        uVar3 = uVar3 + 1 & 0xff;
+        pbVar2 = *(byte **)(param_1 + 6);
+        if (*(byte **)(param_1 + 6) == pbVar6 + uVar4) {
+          *(byte **)(param_1 + 6) = pbVar6;
+          pbVar2 = pbVar6;
+        }
+      } while (param_2 != uVar3);
+    }
+    iVar5 = FUN_40107584((int)pbVar2 - (int)pbVar6,uVar4);
+    *(byte **)(param_1 + 6) = pbVar6 + iVar5;
+    param_1[10] = (short)param_2 + param_1[10];
+  }
+  return;
+}
+
+
+ASSEMBLY
+40106698  addi a1,a1,-0x10
+4010669b  s32i.n a14,a1,0xc
+4010669d  s32i.n a0,a1,0x0 ; DATA Stack[-0x10]
+4010669f  s32i.n a12,a1,0x4
+401066a1  s32i.n a13,a1,0x8
+401066a3  mov.n a12,a2
+401066a5  mov.n a13,a3
+401066a7  beqz a2,0x401066ff ; CONDITIONAL_JUMP 401066ff
+401066aa  beqz.n a3,0x401066e3 ; CONDITIONAL_JUMP 401066e3
+401066ac  l32r a5,0x40100468 ; READ 40100468
+401066af  l32i.n a0,a2,0xc
+401066b1  l32r a6,0x40101f54 ; READ 40101f54
+401066b4  movi.n a2,0x0
+401066b6  mul16s a4,a6,a4
+401066b9  add.n a4,a4,a5
+401066bb  l8ui a8,a0,0x0
+401066be  addi.n a9,a0,0x1
+401066c0  s32i.n a9,a12,0xc
+401066c2  memw
+401066c5  s32i a8,a4,0x200 ; DATA 60000000
+401066c8  l32i.n a0,a12,0xc
+401066ca  l32i.n a14,a12,0x4
+401066cc  addi.n a2,a2,0x1
+401066ce  l16ui a3,a12,0x0
+401066d1  extui a2,a2,0x0,0x8
+401066d4  add.n a7,a3,a14
+401066d6  bne a0,a7,0x401066dd ; CONDITIONAL_JUMP 401066dd
+401066d9  s32i.n a14,a12,0xc
+401066db  mov.n a0,a14
+401066dd  bne a13,a2,0x401066bb ; CONDITIONAL_JUMP 401066bb
+401066e0  j 0x401066ec ; UNCONDITIONAL_JUMP 401066ec
+401066e3  l32i a14,a2,0x4
+401066e6  l32i a0,a2,0xc
+401066e9  l16ui a3,a2,0x0
+401066ec  sub a2,a0,a14
+401066ef  call0 0x40107584 ; UNCONDITIONAL_CALL 40107584
+401066f2  add a4,a14,a2
+401066f5  l16ui a3,a12,0x14
+401066f8  s32i.n a4,a12,0xc
+401066fa  add.n a3,a13,a3
+401066fc  s16i a3,a12,0x14
+401066ff  l32i.n a12,a1,0x4
+40106701  l32i.n a13,a1,0x8
+40106703  l32i.n a14,a1,0xc
+40106705  l32i.n a0,a1,0x0 ; DATA Stack[-0x10]
+40106707  addi a1,a1,0x10
+4010670a  ret.n

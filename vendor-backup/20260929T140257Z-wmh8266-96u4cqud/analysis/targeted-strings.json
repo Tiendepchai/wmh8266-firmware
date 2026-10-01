@@ -1,0 +1,173 @@
+[
+  {
+    "literal": "RLOF",
+    "hits": []
+  },
+  {
+    "literal": "RLON",
+    "hits": []
+  },
+  {
+    "literal": "WMH-8266",
+    "hits": []
+  },
+  {
+    "literal": "RELAY ON",
+    "hits": []
+  },
+  {
+    "literal": "RELAY OFF",
+    "hits": []
+  },
+  {
+    "literal": "<form",
+    "hits": []
+  },
+  {
+    "literal": "POST",
+    "hits": []
+  },
+  {
+    "literal": "AT version:",
+    "hits": [
+      {
+        "flash_offset": "0x67e08",
+        "cpu_address": "0x3ffe9894"
+      }
+    ]
+  },
+  {
+    "literal": "SDK version:",
+    "hits": [
+      {
+        "flash_offset": "0x67e40",
+        "cpu_address": "0x3ffe98cc"
+      }
+    ]
+  },
+  {
+    "literal": "+CIPSERVER",
+    "hits": [
+      {
+        "flash_offset": "0x67f58",
+        "cpu_address": "0x3ffe99e4"
+      }
+    ]
+  },
+  {
+    "literal": "+CIPCLOSE",
+    "hits": [
+      {
+        "flash_offset": "0x67f20",
+        "cpu_address": "0x3ffe99ac"
+      }
+    ]
+  },
+  {
+    "literal": "+CIPSEND",
+    "hits": [
+      {
+        "flash_offset": "0x67f2c",
+        "cpu_address": "0x3ffe99b8"
+      },
+      {
+        "flash_offset": "0x67f38",
+        "cpu_address": "0x3ffe99c4"
+      },
+      {
+        "flash_offset": "0x67f94",
+        "cpu_address": "0x3ffe9a20"
+      }
+    ]
+  },
+  {
+    "literal": "+CIPSTO",
+    "hits": [
+      {
+        "flash_offset": "0x67f70",
+        "cpu_address": "0x3ffe99fc"
+      }
+    ]
+  },
+  {
+    "literal": "+UART",
+    "hits": [
+      {
+        "flash_offset": "0x67fec",
+        "cpu_address": "0x3ffe9a78"
+      },
+      {
+        "flash_offset": "0x67ff4",
+        "cpu_address": "0x3ffe9a80"
+      },
+      {
+        "flash_offset": "0x68000",
+        "cpu_address": "0x3ffe9a8c"
+      }
+    ]
+  },
+  {
+    "literal": "+IPD,",
+    "hits": [
+      {
+        "flash_offset": "0x6836a",
+        "cpu_address": "0x3ffe9df6"
+      },
+      {
+        "flash_offset": "0x6838a",
+        "cpu_address": "0x3ffe9e16"
+      },
+      {
+        "flash_offset": "0x683a6",
+        "cpu_address": "0x3ffe9e32"
+      },
+      {
+        "flash_offset": "0x683b6",
+        "cpu_address": "0x3ffe9e42"
+      }
+    ]
+  },
+  {
+    "literal": "Invalid GPIO",
+    "hits": [
+      {
+        "flash_offset": "0x69634",
+        "cpu_address": "0x3ffeb0c0"
+      }
+    ]
+  },
+  {
+    "literal": "HTTP/1.",
+    "hits": [
+      {
+        "flash_offset": "0x6931a",
+        "cpu_address": "0x3ffeada6"
+      },
+      {
+        "flash_offset": "0x6949b",
+        "cpu_address": "0x3ffeaf27"
+      }
+    ]
+  },
+  {
+    "literal": "Content-Length",
+    "hits": [
+      {
+        "flash_offset": "0x5ea90",
+        "cpu_address": "0x4025ea90"
+      },
+      {
+        "flash_offset": "0x5eb30",
+        "cpu_address": "0x4025eb30"
+      },
+      {
+        "flash_offset": "0x6a010",
+        "cpu_address": "0x3ffeba9c"
+      },
+      {
+        "flash_offset": "0x6a020",
+        "cpu_address": "0x3ffebaac"
+      }
+    ]
+  }
+]

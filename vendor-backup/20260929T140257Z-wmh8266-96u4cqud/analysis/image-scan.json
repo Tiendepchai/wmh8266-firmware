@@ -1,0 +1,21 @@
+{
+  "valid_E9_images": [
+    {
+      "offset": "0x0",
+      "end": "0xca0",
+      "entry": "0x40100420"
+    },
+    {
+      "offset": "0x5ef10",
+      "end": "0x6a070",
+      "entry": "0x40100004"
+    }
+  ],
+  "boot_config_nonsecret": {
+    "selector_offset": 1044480,
+    "selector": 1,
+    "selected_bank": 1040384,
+    "flags": 252,
+    "mode": 229
+  }
+}

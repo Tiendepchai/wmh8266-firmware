@@ -1,0 +1,114 @@
+REQUEST 40220dd8
+XREF 40220fd3 PARAM
+XREF 40220ee4 DATA
+FUNCTION 40220dd8 tcp_server_idle_poll __call0
+CALLER 40220fd3 PARAM
+CALLER 40220ee4 DATA
+
+/* Increments counter at node+0x2c; compares node/server timeout at +0x28; expires via close path.
+   Poll cadence requires separate lwIP timing analysis. */
+
+undefined4 __call0 tcp_server_idle_poll(int param_1,int param_2)
+
+{
+  int iVar1;
+  int *piVar2;
+  uint uVar3;
+  
+  if (param_1 == 0) {
+    FUN_402244c8(param_2,0);
+    FUN_40224dfc(param_2,0,0);
+  }
+  else {
+    iVar1 = *(int *)(param_2 + 0x10);
+    *(int *)(param_1 + 4) = param_2;
+    if (iVar1 == 4) {
+      uVar3 = *(int *)(param_1 + 0x2c) + 1;
+      *(uint *)(param_1 + 0x2c) = uVar3;
+      if (*(uint *)(param_1 + 0x28) == 0) {
+        piVar2 = *(int **)PTR_DAT_40220dd4;
+        if (piVar2 != (int *)0x0) {
+          do {
+            if (*piVar2 == *(int *)(param_1 + 0x54)) {
+              if (piVar2[10] == 0) {
+                *(undefined4 *)(param_1 + 0x2c) = 0;
+                return 0;
+              }
+              if (uVar3 < (uint)piVar2[10]) {
+                return 0;
+              }
+              *(undefined4 *)(param_1 + 0x2c) = 0;
+              FUN_40220c5c(param_1,param_2,0);
+              return 0;
+            }
+            piVar2 = (int *)piVar2[0x17];
+          } while (piVar2 != (int *)0x0);
+        }
+      }
+      else if (*(uint *)(param_1 + 0x28) <= uVar3) {
+        *(undefined4 *)(param_1 + 0x2c) = 0;
+        FUN_40220c5c(param_1,param_2);
+      }
+    }
+    else {
+      FUN_40220c5c(param_1,param_2,0);
+    }
+  }
+  return 0;
+}
+
+
+ASSEMBLY
+40220dd8  addi a1,a1,-0x10
+40220ddb  s32i a12,a1,0x4
+40220dde  s32i a0,a1,0x0 ; DATA Stack[-0x10]
+40220de1  mov.n a12,a3
+40220de3  bnez.n a2,0x40220df8 ; CONDITIONAL_JUMP 40220df8
+40220de5  mov.n a2,a3
+40220de7  movi.n a3,0x0
+40220de9  call0 0x402244c8 ; UNCONDITIONAL_CALL 402244c8
+40220dec  mov.n a2,a12
+40220dee  movi.n a3,0x0
+40220df0  movi.n a4,0x0
+40220df2  call0 0x40224dfc ; UNCONDITIONAL_CALL 40224dfc
+40220df5  j 0x40220e1d ; UNCONDITIONAL_JUMP 40220e1d
+40220df8  l32i.n a0,a3,0x10
+40220dfa  s32i.n a3,a2,0x4
+40220dfc  bnei a0,0x4,0x40220e18 ; CONDITIONAL_JUMP 40220e18
+40220dff  movi.n a4,0x0
+40220e01  l32i.n a3,a2,0x2c
+40220e03  l32i.n a0,a2,0x28
+40220e05  addi.n a3,a3,0x1
+40220e07  s32i.n a3,a2,0x2c
+40220e09  beqz.n a0,0x40220e28 ; CONDITIONAL_JUMP 40220e28
+40220e0b  bltu a3,a0,0x40220e1d ; CONDITIONAL_JUMP 40220e1d
+40220e0e  mov.n a3,a12
+40220e10  s32i.n a4,a2,0x2c
+40220e12  call0 0x40220c5c ; UNCONDITIONAL_CALL 40220c5c
+40220e15  j 0x40220e1d ; UNCONDITIONAL_JUMP 40220e1d
+40220e18  movi.n a4,0x0
+40220e1a  call0 0x40220c5c ; UNCONDITIONAL_CALL 40220c5c
+40220e1d  movi.n a2,0x0
+40220e1f  l32i.n a12,a1,0x4
+40220e21  l32i.n a0,a1,0x0 ; DATA Stack[-0x10]
+40220e23  addi a1,a1,0x10
+40220e26  ret.n
+40220e28  l32r a0,0x40220dd4 ; READ 40220dd4
+40220e2b  l32i.n a0,a0,0x0 ; READ 3fff1974
+40220e2d  beqz a0,0x40220e1d ; CONDITIONAL_JUMP 40220e1d
+40220e30  l32i a7,a2,0x54
+40220e33  j 0x40220e3c ; UNCONDITIONAL_JUMP 40220e3c
+40220e36  l32i a0,a0,0x5c
+40220e39  beqz a0,0x40220e1d ; CONDITIONAL_JUMP 40220e1d
+40220e3c  l32i.n a5,a0,0x0
+40220e3e  bne a5,a7,0x40220e36 ; CONDITIONAL_JUMP 40220e36
+40220e41  l32i.n a0,a0,0x28
+40220e43  beqz.n a0,0x40220e54 ; CONDITIONAL_JUMP 40220e54
+40220e45  bltu a3,a0,0x40220e1d ; CONDITIONAL_JUMP 40220e1d
+40220e48  s32i.n a4,a2,0x2c
+40220e4a  mov.n a3,a12
+40220e4c  movi.n a4,0x0
+40220e4e  call0 0x40220c5c ; UNCONDITIONAL_CALL 40220c5c
+40220e51  j 0x40220e1d ; UNCONDITIONAL_JUMP 40220e1d
+40220e54  s32i.n a4,a2,0x2c
+40220e56  j 0x40220e1d ; UNCONDITIONAL_JUMP 40220e1d

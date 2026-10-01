@@ -1,0 +1,45 @@
+REQUEST 40230f34
+FUNCTION 40230f34 at_cipsto_query __call0
+
+/* Reports runtime timeout; not queried on hardware. */
+
+void __call0 at_cipsto_query(int param_1)
+
+{
+  byte abStack_30 [32];
+  int iStack_10;
+  
+  iStack_10 = param_1;
+  (*(code *)PTR_rom_bzero_inferred_402010e8)(abStack_30,0x20);
+  FUN_402057a8(abStack_30,PTR_s__s__d_4022f380,*(undefined4 *)(PTR_DAT_4022d650 + iStack_10 * 0x18),
+               *(undefined4 *)(PTR_DAT_4022db34 + 4));
+  at_output_cstring(abStack_30);
+  FUN_4022d7b8();
+  return;
+}
+
+
+ASSEMBLY
+40230f34  movi a3,0x20
+40230f37  addi a1,a1,-0x30
+40230f3a  s32i.n a2,a1,0x20
+40230f3c  s32i.n a0,a1,0x24
+40230f3e  mov.n a2,a1
+40230f40  l32r a0,0x402010e8 ; READ 402010e8
+40230f43  callx0 a0
+40230f46  mov.n a2,a1
+40230f48  l32r a3,0x4022f380 ; READ 4022f380
+40230f4b  l32i.n a4,a1,0x20
+40230f4d  l32r a5,0x4022d650 ; READ 4022d650
+40230f50  addx2 a4,a4,a4
+40230f53  addx8 a4,a4,a5
+40230f56  l32r a5,0x4022db34 ; READ 4022db34
+40230f59  l32i.n a4,a4,0x0
+40230f5b  l32i.n a5,a5,0x4
+40230f5d  call0 0x402057a8 ; UNCONDITIONAL_CALL 402057a8
+40230f60  mov.n a2,a1
+40230f62  call0 0x402358c0 ; UNCONDITIONAL_CALL 402358c0
+40230f65  call0 0x4022d7b8 ; UNCONDITIONAL_CALL 4022d7b8
+40230f68  l32i.n a0,a1,0x24
+40230f6a  addi a1,a1,0x30
+40230f6d  ret.n

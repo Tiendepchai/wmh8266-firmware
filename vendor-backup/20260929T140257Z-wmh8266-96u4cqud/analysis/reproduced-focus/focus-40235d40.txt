@@ -1,0 +1,68 @@
+REQUEST 40235d40
+XREF 402358da UNCONDITIONAL_CALL
+XREF 4022e02c UNCONDITIONAL_CALL
+XREF 4022e0b2 UNCONDITIONAL_CALL
+XREF 4022e1e7 UNCONDITIONAL_CALL
+XREF 4022e28d UNCONDITIONAL_CALL
+FUNCTION 40235d40 at_output_bytes __call0
+CALLER 402358da UNCONDITIONAL_CALL
+CALLER 4022e02c UNCONDITIONAL_CALL
+CALLER 4022e0b2 UNCONDITIONAL_CALL
+CALLER 4022e1e7 UNCONDITIONAL_CALL
+CALLER 4022e28d UNCONDITIONAL_CALL
+
+/* Forwards arguments to UART queue unless optional output hook configured. Assembly preserves a2-a5
+   for UART call. */
+
+void __call0 at_output_bytes(uint arg0,byte *arg1,uint arg2,uint arg3)
+
+{
+  code *pcVar1;
+  
+  pcVar1 = *(code **)(PTR_DAT_4023223c + 8);
+  if (PTR_DAT_40235968[4] == '\0') {
+    if (pcVar1 == (code *)0x0) {
+      uart_output_queue(arg0,arg1,arg2,arg3);
+    }
+    else {
+      (*pcVar1)(arg1);
+    }
+  }
+  else if (pcVar1 == (code *)0x0) {
+    if (*(code **)(PTR_DAT_4023223c + 0xc) != (code *)0x0) {
+      (**(code **)(PTR_DAT_4023223c + 0xc))(arg1,arg2);
+    }
+  }
+  else {
+    (*pcVar1)(arg1);
+  }
+  return;
+}
+
+
+ASSEMBLY
+40235d40  l32r a6,0x40235968 ; READ 40235968
+40235d43  addi a1,a1,-0x10
+40235d46  s32i.n a0,a1,0x0 ; DATA Stack[-0x10]
+40235d48  l32r a0,0x4023223c ; READ 4023223c
+40235d4b  l8ui a6,a6,0x4 ; READ 3fff2c5c
+40235d4e  l32i.n a7,a0,0x8 ; READ 3fff1d58
+40235d50  beqz.n a6,0x40235d74 ; CONDITIONAL_JUMP 40235d74
+40235d52  beqz.n a7,0x40235d5c ; CONDITIONAL_JUMP 40235d5c
+40235d54  mov.n a2,a3
+40235d56  callx0 a7
+40235d59  j 0x40235d6d ; UNCONDITIONAL_JUMP 40235d6d
+40235d5c  l32i.n a5,a0,0xc ; READ 3fff1d5c
+40235d5e  beqz.n a5,0x40235d6d ; CONDITIONAL_JUMP 40235d6d
+40235d60  mov.n a2,a3
+40235d62  mov.n a3,a4
+40235d64  callx0 a5
+40235d67  j 0x40235d6d ; UNCONDITIONAL_JUMP 40235d6d
+40235d6a  call0 0x40235c28 ; UNCONDITIONAL_CALL 40235c28
+40235d6d  l32i.n a0,a1,0x0 ; DATA Stack[-0x10]
+40235d6f  addi a1,a1,0x10
+40235d72  ret.n
+40235d74  beqz a7,0x40235d6a ; CONDITIONAL_JUMP 40235d6a
+40235d77  mov.n a2,a3
+40235d79  callx0 a7
+40235d7c  j 0x40235d6d ; UNCONDITIONAL_JUMP 40235d6d

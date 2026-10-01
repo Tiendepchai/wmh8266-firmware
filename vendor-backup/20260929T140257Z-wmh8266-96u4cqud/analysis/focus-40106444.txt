@@ -1,0 +1,34 @@
+REQUEST 40106444
+XREF 4010647a UNCONDITIONAL_CALL
+FUNCTION 40106444 FUN_40106444 __call0
+CALLER 4010647a UNCONDITIONAL_CALL
+
+undefined4 __call0 FUN_40106444(short param_1,undefined4 param_2)
+
+{
+  int iVar1;
+  
+  iVar1 = (int)(short)DAT_40101f54 * (int)param_1 + DAT_40100468;
+  memw();
+  if ((*(uint *)(iVar1 + 0x21c) >> 0x10 & 0xff) < 0x7e) {
+    memw();
+    *(undefined4 *)(iVar1 + 0x200) = param_2;
+  }
+  return 0;
+}
+
+
+ASSEMBLY
+40106444  l32r a6,0x40101f54 ; READ 40101f54
+40106447  l32r a7,0x40100468 ; READ 40100468
+4010644a  mul16s a6,a6,a2
+4010644d  add.n a2,a6,a7
+4010644f  memw
+40106452  l32i a5,a2,0x21c ; DATA 6000001c
+40106455  movi a4,0x7d
+40106458  extui a5,a5,0x10,0x8
+4010645b  bltu a4,a5,0x40106464 ; CONDITIONAL_JUMP 40106464
+4010645e  memw
+40106461  s32i a3,a2,0x200 ; DATA 60000000
+40106464  movi.n a2,0x0
+40106466  ret.n

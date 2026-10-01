@@ -1,0 +1,134 @@
+
+Merging object attributes
+
+
+Discarded input sections
+
+ .text          0x00000000        0x0 main.o
+ .data          0x00000000        0x0 main.o
+ .bss           0x00000000        0x0 main.o
+ .ARM.attributes
+                0x00000000       0x2d main.o
+ .text          0x00000000        0x0 startup.o
+ .data          0x00000000        0x0 startup.o
+ .bss           0x00000000        0x0 startup.o
+ .ARM.attributes
+                0x00000000       0x21 startup.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+FLASH            0x08000000         0x00010000         xr
+RAM              0x20000000         0x00005000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD main.o
+LOAD startup.o
+                0x20005000                        _estack = (ORIGIN (RAM) + LENGTH (RAM))
+
+.isr_vector     0x08000000       0x40
+                0x08000000                        . = ALIGN (0x4)
+ *(.isr_vector)
+ .isr_vector    0x08000000       0x40 startup.o
+                0x08000000                g_pfnVectors
+                0x08000040                        . = ALIGN (0x4)
+
+.text           0x08000040      0x5d0
+                0x08000040                        . = ALIGN (0x4)
+ *(.text)
+ *(.text*)
+ .text.delay_ms
+                0x08000040       0x18 main.o
+ .text.usart3_send_byte
+                0x08000058       0x12 main.o
+ .text.tuya_send_frame
+                0x0800006a       0x4e main.o
+ .text.tuya_report_dp
+                0x080000b8       0x2c main.o
+ .text.buzzer_tone_duty.part.0
+                0x080000e4       0x7c main.o
+ .text.buzzer_westminster_8
+                0x08000160       0xa4 main.o
+ .text.SysTick_Handler
+                0x08000204       0x10 main.o
+                0x08000204                SysTick_Handler
+ .text.startup.main
+                0x08000214      0x398 main.o
+                0x08000214                main
+ .text.Reset_Handler
+                0x080005ac       0x40 startup.o
+                0x080005ac                Reset_Handler
+ .text.DefaultHandler
+                0x080005ec        0x2 startup.o
+                0x080005ec                Default_Handler
+ *(.rodata)
+ *(.rodata*)
+ .rodata.main.str1.1
+                0x080005ee       0x22 main.o
+                0x08000610                        . = ALIGN (0x4)
+                0x08000610                        _etext = .
+                0x08000610                        _sidata = LOADADDR (.data)
+
+.glue_7         0x08000610        0x0
+ .glue_7        0x08000610        0x0 linker stubs
+
+.glue_7t        0x08000610        0x0
+ .glue_7t       0x08000610        0x0 linker stubs
+
+.vfp11_veneer   0x08000610        0x0
+ .vfp11_veneer  0x08000610        0x0 linker stubs
+
+.v4_bx          0x08000610        0x0
+ .v4_bx         0x08000610        0x0 linker stubs
+
+.iplt           0x08000610        0x0
+ .iplt          0x08000610        0x0 main.o
+
+.rel.dyn        0x08000610        0x0
+ .rel.iplt      0x08000610        0x0 main.o
+
+.data           0x20000000        0x0 load address 0x08000610
+                0x20000000                        . = ALIGN (0x4)
+                0x20000000                        _sdata = .
+ *(.data)
+ *(.data*)
+                0x20000000                        . = ALIGN (0x4)
+                0x20000000                        _edata = .
+
+.igot.plt       0x20000000        0x0 load address 0x08000610
+ .igot.plt      0x20000000        0x0 main.o
+
+.bss            0x20000000       0x54 load address 0x08000610
+                0x20000000                        . = ALIGN (0x4)
+                0x20000000                        _sbss = .
+ *(.bss)
+ *(.bss*)
+ .bss.p_sum     0x20000000        0x4 main.o
+ .bss.p_data    0x20000004       0x40 main.o
+ .bss.p_data_idx
+                0x20000044        0x2 main.o
+ .bss.p_len     0x20000046        0x2 main.o
+ .bss.p_cmd     0x20000048        0x1 main.o
+ .bss.p_state   0x20000049        0x1 main.o
+ .bss.g_relay_state
+                0x2000004a        0x1 main.o
+ *fill*         0x2000004b        0x1 
+ .bss.g_last_heartbeat_tick
+                0x2000004c        0x4 main.o
+ .bss.g_ticks   0x20000050        0x4 main.o
+                0x20000050                g_ticks
+ *(COMMON)
+                0x20000054                        . = ALIGN (0x4)
+                0x20000054                        _ebss = .
+
+/DISCARD/
+ *(.ARM.exidx*)
+ *(.ARM.attributes)
+OUTPUT(firmware.elf elf32-littlearm)
+LOAD linker stubs
+
+.comment        0x00000000       0x12
+ .comment       0x00000000       0x12 main.o
+                                 0x13 (size before relaxing)

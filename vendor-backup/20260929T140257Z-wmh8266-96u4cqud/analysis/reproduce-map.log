@@ -1,0 +1,82 @@
+{
+  "source_sha256": "7e281748a3df4ede9d2bddefa04295ac3c8cba8d2504a15e4b752640c374b1f8",
+  "flash_size": 1048576,
+  "boot": {
+    "start": 0,
+    "end": 3232,
+    "entry": 1074791456,
+    "flash_mode": 2,
+    "size_freq": 32,
+    "xor_checksum": 121,
+    "segments": [
+      {
+        "name": "iram0",
+        "flash_offset": 16,
+        "address": 1074790400,
+        "size": 1856,
+        "executable": true
+      },
+      {
+        "name": "dram1",
+        "flash_offset": 1880,
+        "address": 1073643520,
+        "size": 776,
+        "executable": false
+      },
+      {
+        "name": "dram2",
+        "flash_offset": 2664,
+        "address": 1073644304,
+        "size": 552,
+        "executable": false
+      }
+    ]
+  },
+  "app": {
+    "start": 388880,
+    "end": 434288,
+    "entry": 1074790404,
+    "flash_mode": 0,
+    "size_freq": 64,
+    "xor_checksum": 198,
+    "segments": [
+      {
+        "name": "irom",
+        "flash_offset": 4112,
+        "address": 1075843088,
+        "size": 384768,
+        "executable": true
+      },
+      {
+        "name": "iram0",
+        "flash_offset": 388896,
+        "address": 1074790400,
+        "size": 30288,
+        "executable": true
+      },
+      {
+        "name": "dram1",
+        "flash_offset": 419192,
+        "address": 1073643520,
+        "size": 2692,
+        "executable": false
+      },
+      {
+        "name": "dram2",
+        "flash_offset": 421892,
+        "address": 1073646224,
+        "size": 12384,
+        "executable": false
+      }
+    ],
+    "v2_start": 4096,
+    "v2_mode_sizefreq": [
+      0,
+      1
+    ],
+    "crc32": 48233138,
+    "end_with_crc": 434292
+  },
+  "mapping_note": "IROM physical flash offset + 0x40200000; DRAM/IRAM from validated segment headers. Boot and app are separate programs, never overlapping imports."
+}
+Safe marker list written; all validation assertions passed.

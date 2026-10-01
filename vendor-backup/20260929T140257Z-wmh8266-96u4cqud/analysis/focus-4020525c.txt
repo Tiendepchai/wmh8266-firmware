@@ -1,0 +1,17 @@
+REQUEST 4020525c
+XREF 4022d4d0 UNCONDITIONAL_CALL
+FUNCTION 4020525c sdk_version_string __call0
+CALLER 4022d4d0 UNCONDITIONAL_CALL
+
+/* Returns 1.5.4(baaeaebb); identified by +GMR caller. */
+
+undefined * __call0 sdk_version_string(void)
+
+{
+  return PTR_s_1_5_4_baaeaebb__402015a0;
+}
+
+
+ASSEMBLY
+4020525c  l32r a2,0x402015a0 ; READ 402015a0
+4020525f  ret.n

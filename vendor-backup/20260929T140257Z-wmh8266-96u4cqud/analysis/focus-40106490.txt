@@ -1,0 +1,138 @@
+REQUEST 40106490
+XREF 4010679b UNCONDITIONAL_CALL
+XREF 40235c89 COMPUTED_CALL
+XREF 40235c24 DATA
+FUNCTION 40106490 uart_ring_append __call0
+CALLER 4010679b UNCONDITIONAL_CALL
+CALLER 40235c89 COMPUTED_CALL
+CALLER 40235c24 DATA
+
+/* Appends bytes to transmit ring buffer, handling wrap. */
+
+void __call0 uart_ring_append(ushort *param_1,int param_2,uint param_3)
+
+{
+  ushort uVar1;
+  int iVar2;
+  uint uVar3;
+  uint uVar4;
+  short sVar5;
+  int iVar6;
+  int iVar7;
+  
+  if (((param_1 != (ushort *)0x0) && (param_2 != 0)) && (param_3 != 0)) {
+    uVar3 = ((uint)*param_1 + *(int *)(param_1 + 2)) - *(int *)(param_1 + 4);
+    uVar4 = uVar3 & 0xffff;
+    if (uVar4 < param_3) {
+      (*(code *)PTR_rom_memcpy_inferred_4010054c)();
+      iVar2 = *(int *)(param_1 + 4);
+      iVar6 = *(int *)(param_1 + 2);
+      *(uint *)(param_1 + 4) = uVar4 + iVar2;
+      iVar2 = FUN_40107584((uVar4 + iVar2) - iVar6,*param_1);
+      iVar2 = iVar2 + iVar6;
+      *(int *)(param_1 + 4) = iVar2;
+      sVar5 = (short)uVar3;
+      param_1[10] = param_1[10] - sVar5;
+      iVar6 = param_3 - uVar4;
+      (*(code *)PTR_rom_memcpy_inferred_4010054c)(iVar2,uVar4 + param_2);
+      iVar7 = *(int *)(param_1 + 2);
+      iVar6 = iVar6 + *(int *)(param_1 + 4);
+      *(int *)(param_1 + 4) = iVar6;
+      iVar2 = FUN_40107584(iVar6 - iVar7,*param_1);
+      *(int *)(param_1 + 4) = iVar2 + iVar7;
+      uVar1 = param_1[10] + (sVar5 - (short)param_3);
+    }
+    else {
+      (*(code *)PTR_rom_memcpy_inferred_4010054c)(*(int *)(param_1 + 4),param_2,param_3);
+      iVar2 = *(int *)(param_1 + 4);
+      iVar6 = *(int *)(param_1 + 2);
+      *(uint *)(param_1 + 4) = param_3 + iVar2;
+      iVar2 = FUN_40107584((param_3 + iVar2) - iVar6,*param_1);
+      *(int *)(param_1 + 4) = iVar2 + iVar6;
+      uVar1 = param_1[10] - (short)param_3;
+    }
+    param_1[10] = uVar1;
+  }
+  return;
+}
+
+
+ASSEMBLY
+40106490  addi a1,a1,-0x20
+40106493  s32i a15,a1,0x18
+40106496  s32i a0,a1,0x8
+40106499  s32i a14,a1,0x14
+4010649c  s32i.n a13,a1,0x10
+4010649e  s32i.n a12,a1,0xc
+401064a0  mov.n a13,a4
+401064a2  mov.n a12,a2
+401064a4  mov.n a14,a3
+401064a6  beqz.n a2,0x401064e4 ; CONDITIONAL_JUMP 401064e4
+401064a8  beqz.n a3,0x401064e4 ; CONDITIONAL_JUMP 401064e4
+401064aa  beqz.n a4,0x401064e4 ; CONDITIONAL_JUMP 401064e4
+401064ac  l32i.n a5,a2,0x4
+401064ae  l16ui a4,a2,0x0
+401064b1  l32i.n a2,a2,0x8
+401064b3  add.n a4,a4,a5
+401064b5  sub a4,a4,a2
+401064b8  extui a4,a4,0x0,0x10
+401064bb  bltu a4,a13,0x401064f3 ; CONDITIONAL_JUMP 401064f3
+401064be  mov.n a4,a13
+401064c0  l32r a0,0x4010054c ; READ 4010054c
+401064c3  callx0 a0 ; COMPUTED_CALL 400018b4
+401064c6  l16ui a3,a12,0x0
+401064c9  l32i.n a2,a12,0x8
+401064cb  l32i.n a15,a12,0x4
+401064cd  add.n a2,a13,a2
+401064cf  s32i.n a2,a12,0x8
+401064d1  sub a2,a2,a15
+401064d4  call0 0x40107584 ; UNCONDITIONAL_CALL 40107584
+401064d7  add.n a2,a2,a15
+401064d9  l16ui a0,a12,0x14
+401064dc  s32i.n a2,a12,0x8
+401064de  sub a0,a0,a13
+401064e1  s16i a0,a12,0x14
+401064e4  l32i.n a12,a1,0xc
+401064e6  l32i.n a13,a1,0x10
+401064e8  l32i.n a14,a1,0x14
+401064ea  l32i.n a15,a1,0x18
+401064ec  l32i.n a0,a1,0x8
+401064ee  addi a1,a1,0x20
+401064f1  ret.n
+401064f3  s32i a4,a1,0x0 ; DATA Stack[-0x20]
+401064f6  l32r a0,0x4010054c ; READ 4010054c
+401064f9  callx0 a0 ; COMPUTED_CALL 400018b4
+401064fc  l16ui a3,a12,0x0
+401064ff  l32i a4,a12,0x8
+40106502  l32i.n a2,a1,0x0 ; DATA Stack[-0x20]
+40106504  l32i.n a15,a12,0x4
+40106506  add.n a2,a2,a4
+40106508  s32i.n a2,a12,0x8
+4010650a  sub a2,a2,a15
+4010650d  call0 0x40107584 ; UNCONDITIONAL_CALL 40107584
+40106510  l16ui a5,a12,0x14
+40106513  l32i.n a4,a1,0x0 ; DATA Stack[-0x20]
+40106515  add.n a2,a2,a15
+40106517  s32i.n a2,a12,0x8
+40106519  add.n a3,a4,a14
+4010651b  l32i.n a14,a1,0x0 ; DATA Stack[-0x20]
+4010651d  sub a5,a5,a4
+40106520  s16i a5,a12,0x14
+40106523  sub a4,a13,a4
+40106526  s32i.n a4,a1,0x4
+40106528  l32r a0,0x4010054c ; READ 4010054c
+4010652b  callx0 a0 ; COMPUTED_CALL 400018b4
+4010652e  l16ui a3,a12,0x0
+40106531  l32i.n a4,a12,0x8
+40106533  l32i.n a2,a1,0x4
+40106535  l32i.n a15,a12,0x4
+40106537  add.n a2,a2,a4
+40106539  s32i.n a2,a12,0x8
+4010653b  sub a2,a2,a15
+4010653e  call0 0x40107584 ; UNCONDITIONAL_CALL 40107584
+40106541  sub a3,a14,a13
+40106544  l16ui a0,a12,0x14
+40106547  add.n a4,a2,a15
+40106549  s32i.n a4,a12,0x8
+4010654b  add.n a0,a0,a3
+4010654d  j 0x401064e1 ; UNCONDITIONAL_JUMP 401064e1

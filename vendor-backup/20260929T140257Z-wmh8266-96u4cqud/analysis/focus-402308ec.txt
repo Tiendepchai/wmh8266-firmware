@@ -1,0 +1,382 @@
+REQUEST 402308ec
+FUNCTION 402308ec at_cipserver_set __call0
+
+/* WARNING: Removing unreachable block (ram,0x40230a6c) */
+/* Dispatch record at flash 0x5c938. Creates TCP server and registers accept callback 0x40230794;
+   uses configurable timeout at 0x3ffe8378. */
+
+void __call0 at_cipserver_set(undefined4 param_1,char *param_2)
+
+{
+  undefined4 uVar1;
+  undefined *puVar2;
+  undefined4 *puVar3;
+  int iVar4;
+  uint uVar5;
+  int iVar6;
+  undefined *puVar7;
+  undefined *puVar8;
+  int local_60;
+  int local_5c;
+  uint auStack_58 [2];
+  undefined1 auStack_50 [32];
+  int iStack_30;
+  int iStack_2c;
+  char *apcStack_c [3];
+  
+  local_60 = 0;
+  local_5c = 0;
+  auStack_58[0] = 0;
+  apcStack_c[0] = param_2;
+  (*(code *)PTR_rom_bzero_inferred_402010e8)(auStack_50,0x20);
+  puVar7 = PTR_DAT_4022db30;
+  if (PTR_DAT_4022db30[8] == '\0') {
+    FUN_4022d7d4();
+  }
+  else if (apcStack_c[0] == (char *)0x0) {
+    FUN_4022d7d4();
+  }
+  else {
+    apcStack_c[0] = apcStack_c[0] + 1;
+    at_parse_integer(apcStack_c,auStack_58,&local_5c);
+    if (local_5c < 1) {
+      if (auStack_58[0] == 0) {
+        if (*apcStack_c[0] != '\r') {
+          FUN_4022d7d4();
+          return;
+        }
+      }
+      else {
+        if (auStack_58[0] != 1) {
+          FUN_4022d7d4();
+          return;
+        }
+        if (*apcStack_c[0] == ',') {
+          apcStack_c[0] = apcStack_c[0] + 1;
+          iVar4 = at_parse_integer(apcStack_c,&local_60,&local_5c);
+          if (iVar4 != 0) {
+            FUN_4022d7d4();
+            return;
+          }
+          if ((DAT_40201f08 < local_60) || (local_60 < 1)) {
+            FUN_4022d7d4();
+            return;
+          }
+        }
+        else {
+          if (*apcStack_c[0] != '\r') {
+            FUN_4022d7d4();
+            return;
+          }
+          local_60 = 0x14d;
+        }
+      }
+      puVar8 = PTR_s_at_ipCmd_c_4022db2c;
+      if (auStack_58[0] == (byte)puVar7[0x30]) {
+        at_output_cstring(PTR_s_no_change_402308b8);
+        FUN_4022d7b8();
+      }
+      else {
+        if (auStack_58[0] == 0) {
+          iStack_30 = 0;
+          puVar7[0x30] = 0;
+          FUN_40226bf8(*(undefined4 *)(puVar7 + 0x34),&iStack_30,0);
+          iVar4 = *(int *)(puVar7 + 0x34);
+          if (*(char *)(iVar4 + 0x14) == '\0') {
+            FUN_40226fec();
+            (*(code *)PTR_FUN_402015d4)
+                      (*(undefined4 *)(*(int *)(puVar7 + 0x34) + 8),puVar8,DAT_402308dc);
+            iVar4 = *(int *)(puVar7 + 0x34);
+            *(undefined4 *)(iVar4 + 8) = 0;
+            (*(code *)PTR_FUN_402015d4)(iVar4,puVar8,DAT_402308e0);
+            *(undefined4 *)(puVar7 + 0x34) = 0;
+          }
+          else {
+            uVar5 = 0;
+            do {
+              iStack_2c = uVar5 * 0xc;
+              (*(code *)PTR_rom_memcpy_inferred_402015d0)
+                        (*(int *)(iVar4 + 8) + 0xc,uVar5 * 0xc + iStack_30 + 8,4);
+              **(undefined4 **)(*(int *)(puVar7 + 0x34) + 8) =
+                   *(undefined4 *)(iStack_30 + iStack_2c + 4);
+              espconn_disconnect_inferred();
+              iVar4 = *(int *)(puVar7 + 0x34);
+              uVar5 = uVar5 + 1 & 0xff;
+            } while (uVar5 < *(byte *)(iVar4 + 0x14));
+          }
+        }
+        else {
+          puVar3 = (undefined4 *)
+                   (*(code *)PTR_FUN_402015c4)(0x1c,PTR_s_at_ipCmd_c_4022db2c,DAT_402308bc);
+          *(undefined4 **)(puVar7 + 0x34) = puVar3;
+          uVar1 = DAT_402308c4;
+          if (puVar3 == (undefined4 *)0x0) {
+            at_output_cstring(PTR_s_TcpServer_Failure_402308c0);
+            FUN_4022d7d4();
+            return;
+          }
+          puVar3[1] = 0;
+          *puVar3 = 0x10;
+          iVar4 = (*(code *)PTR_FUN_402015c4)(0x20,puVar8,uVar1);
+          puVar2 = PTR_at_tcp_accept_callback_402308c8;
+          iVar6 = *(int *)(puVar7 + 0x34);
+          *(int *)(iVar6 + 8) = iVar4;
+          *(int *)(iVar4 + 4) = local_60;
+          iVar4 = FUN_40226bb8(iVar6,puVar2);
+          if (iVar4 != 0) {
+            (*(code *)PTR_FUN_402015d4)
+                      (*(undefined4 *)(*(int *)(puVar7 + 0x34) + 8),puVar8,DAT_402308cc);
+            (*(code *)PTR_FUN_402015d4)(*(undefined4 *)(puVar7 + 0x34),puVar8,DAT_402308d0);
+            FUN_4022d7d4();
+            return;
+          }
+          iVar4 = FUN_40226cc0();
+          if (iVar4 != 0) {
+            (*(code *)PTR_FUN_402015d4)
+                      (*(undefined4 *)(*(byte **)(puVar7 + 0x34) + 8),puVar8,DAT_402308d4);
+            (*(code *)PTR_FUN_402015d4)(*(undefined4 *)(puVar7 + 0x34),puVar8,DAT_402308d8);
+            FUN_4022d7d4();
+            return;
+          }
+          uVar5 = espconn_set_idle_timeout
+                            (*(byte **)(puVar7 + 0x34),*(uint *)(PTR_DAT_4022db34 + 4),0);
+          if (uVar5 != 0) {
+            (*(code *)PTR_FUN_402015d4)
+                      (*(undefined4 *)(*(int *)(puVar7 + 0x34) + 8),puVar8,DAT_402308e4);
+            (*(code *)PTR_FUN_402015d4)(*(undefined4 *)(puVar7 + 0x34),puVar8,DAT_402308e8);
+            FUN_4022d7d4();
+            return;
+          }
+          puVar7[0x30] = auStack_58[0] != 0;
+        }
+        FUN_4022d7b8();
+      }
+    }
+    else {
+      FUN_4022d7d4();
+    }
+  }
+  return;
+}
+
+
+ASSEMBLY
+402308ec  addi a1,a1,-0x60
+402308ef  s32i a12,a1,0x3c
+402308f2  addi a2,a1,0x10
+402308f5  s32i a0,a1,0x38
+402308f8  s32i a3,a1,0x54
+402308fb  s32i a13,a1,0x40
+402308fe  movi a3,0x20
+40230901  movi.n a13,0x0
+40230903  s32i.n a13,a1,0x0 ; DATA Stack[-0x60]
+40230905  s32i.n a13,a1,0x4
+40230907  s32i.n a13,a1,0x8
+40230909  l32r a0,0x402010e8 ; READ 402010e8
+4023090c  callx0 a0 ; COMPUTED_CALL 40002ae8
+4023090f  l32r a12,0x4022db30 ; READ 4022db30
+40230912  l8ui a2,a12,0x8 ; READ 3fff1cf8
+40230915  l32i a0,a1,0x54
+40230918  bnez.n a2,0x40230920 ; CONDITIONAL_JUMP 40230920
+4023091a  call0 0x4022d7d4 ; UNCONDITIONAL_CALL 4022d7d4
+4023091d  j 0x40230947 ; UNCONDITIONAL_JUMP 40230947
+40230920  addi a2,a1,0x54
+40230923  bnez.n a0,0x4023092e ; CONDITIONAL_JUMP 4023092e
+40230925  call0 0x4022d7d4 ; UNCONDITIONAL_CALL 4022d7d4
+40230928  j 0x40230947 ; UNCONDITIONAL_JUMP 40230947
+4023092e  addi a3,a0,0x1
+40230931  addi a4,a1,0x4
+40230934  s32i a3,a1,0x54
+40230937  addi a3,a1,0x8
+4023093a  call0 0x4022da48 ; UNCONDITIONAL_CALL 4022da48
+4023093d  l32i.n a4,a1,0x4 ; DATA Stack[-0x5c]
+4023093f  l32i.n a0,a1,0x8
+40230941  blti a4,0x1,0x40230953 ; CONDITIONAL_JUMP 40230953
+40230944  call0 0x4022d7d4 ; UNCONDITIONAL_CALL 4022d7d4
+40230947  l32i.n a12,a1,0x3c
+40230949  l32i a13,a1,0x40
+4023094c  l32i.n a0,a1,0x38
+4023094e  addi a1,a1,0x60
+40230951  ret.n
+40230953  movi.n a6,0xd
+40230955  bnez.n a0,0x40230969 ; CONDITIONAL_JUMP 40230969
+40230957  l32i a5,a1,0x54
+4023095a  l8ui a5,a5,0x0
+4023095d  beq a5,a6,0x402309a7 ; CONDITIONAL_JUMP 402309a7
+40230960  call0 0x4022d7d4 ; UNCONDITIONAL_CALL 4022d7d4
+40230963  j 0x40230947 ; UNCONDITIONAL_JUMP 40230947
+40230969  bnei a0,0x1,0x402309e0 ; CONDITIONAL_JUMP 402309e0
+4023096c  l32i a0,a1,0x54
+4023096f  addi a3,a1,0x54
+40230972  l8ui a2,a0,0x0
+40230975  movi a7,0x2c
+40230978  bne a2,a7,0x40230994 ; CONDITIONAL_JUMP 40230994
+4023097b  mov a2,a3
+4023097e  addi a4,a0,0x1
+40230981  s32i a4,a1,0x54
+40230984  mov.n a3,a1
+40230986  addi.n a4,a1,0x4
+40230988  call0 0x4022da48 ; UNCONDITIONAL_CALL 4022da48
+4023098b  beqz a2,0x40230b2f ; CONDITIONAL_JUMP 40230b2f
+4023098e  call0 0x4022d7d4 ; UNCONDITIONAL_CALL 4022d7d4
+40230991  j 0x40230947 ; UNCONDITIONAL_JUMP 40230947
+40230994  beq a2,a6,0x402309a0 ; CONDITIONAL_JUMP 402309a0
+40230997  call0 0x4022d7d4 ; UNCONDITIONAL_CALL 4022d7d4
+4023099a  j 0x40230947 ; UNCONDITIONAL_JUMP 40230947
+402309a0  movi a5,0x14d
+402309a3  s32i.n a5,a1,0x0 ; DATA Stack[-0x60]
+402309a5  l32i.n a0,a1,0x8
+402309a7  l8ui a6,a12,0x30 ; READ 3fff1d20
+402309aa  l32r a13,0x4022db2c ; READ 4022db2c
+402309ad  bne a0,a6,0x402309be ; CONDITIONAL_JUMP 402309be
+402309b0  l32r a2,0x402308b8 ; READ 402308b8 ; PARAM 3ffea208
+402309b3  call0 0x402358c0 ; UNCONDITIONAL_CALL 402358c0
+402309b6  call0 0x4022d7b8 ; UNCONDITIONAL_CALL 4022d7b8
+402309b9  j 0x40230947 ; UNCONDITIONAL_JUMP 40230947
+402309be  beqz a0,0x40230a62 ; CONDITIONAL_JUMP 40230a62
+402309c1  movi a2,0x1c
+402309c4  mov a3,a13 ; PARAM 4025cac0
+402309c7  l32r a4,0x402308bc ; READ 402308bc
+402309ca  l32r a0,0x402015c4 ; READ 402015c4
+402309cd  callx0 a0 ; COMPUTED_CALL 40100da8
+402309d0  s32i.n a2,a12,0x34 ; WRITE 3fff1d24
+402309d2  bnez.n a2,0x402309e9 ; CONDITIONAL_JUMP 402309e9
+402309d4  l32r a2,0x402308c0 ; READ 402308c0 ; PARAM 3ffea214
+402309d7  call0 0x402358c0 ; UNCONDITIONAL_CALL 402358c0
+402309da  call0 0x4022d7d4 ; UNCONDITIONAL_CALL 4022d7d4
+402309dd  j 0x40230947 ; UNCONDITIONAL_JUMP 40230947
+402309e0  call0 0x4022d7d4 ; UNCONDITIONAL_CALL 4022d7d4
+402309e3  j 0x40230947 ; UNCONDITIONAL_JUMP 40230947
+402309e9  mov a3,a13 ; PARAM 4025cac0
+402309ec  l32r a4,0x402308c4 ; READ 402308c4
+402309ef  movi a7,0x10
+402309f2  movi.n a8,0x0
+402309f4  s32i.n a8,a2,0x4
+402309f6  s32i.n a7,a2,0x0
+402309f8  movi.n a2,0x20
+402309fa  l32r a0,0x402015c4 ; READ 402015c4
+402309fd  callx0 a0 ; COMPUTED_CALL 40100da8
+40230a00  l32r a3,0x402308c8 ; READ 402308c8 ; PARAM 40230794
+40230a03  l32i.n a9,a12,0x34 ; READ 3fff1d24
+40230a05  l32i.n a10,a1,0x0 ; DATA Stack[-0x60]
+40230a07  s32i.n a2,a9,0x8
+40230a09  s32i.n a10,a2,0x4
+40230a0b  mov.n a2,a9
+40230a0d  call0 0x40226bb8 ; UNCONDITIONAL_CALL 40226bb8
+40230a10  mov.n a11,a2
+40230a12  l32i.n a2,a12,0x34 ; READ 3fff1d24
+40230a14  beqz.n a11,0x40230a36 ; CONDITIONAL_JUMP 40230a36
+40230a16  l32i.n a2,a2,0x8
+40230a18  mov.n a3,a13 ; PARAM 4025cac0
+40230a1a  l32r a4,0x402308cc ; READ 402308cc
+40230a1d  l32r a0,0x402015d4 ; READ 402015d4
+40230a20  callx0 a0 ; COMPUTED_CALL 40100d20
+40230a23  mov.n a3,a13 ; PARAM 4025cac0
+40230a25  l32i.n a2,a12,0x34 ; READ 3fff1d24
+40230a27  l32r a4,0x402308d0 ; READ 402308d0
+40230a2a  l32r a0,0x402015d4 ; READ 402015d4
+40230a2d  callx0 a0 ; COMPUTED_CALL 40100d20
+40230a30  call0 0x4022d7d4 ; UNCONDITIONAL_CALL 4022d7d4
+40230a33  j 0x40230947 ; UNCONDITIONAL_JUMP 40230947
+40230a36  call0 0x40226cc0 ; UNCONDITIONAL_CALL 40226cc0
+40230a39  mov a0,a2
+40230a3c  l32i a2,a12,0x34 ; READ 3fff1d24
+40230a3f  beqz a0,0x40230af2 ; CONDITIONAL_JUMP 40230af2
+40230a42  l32i.n a2,a2,0x8
+40230a44  mov.n a3,a13 ; PARAM 4025cac0
+40230a46  l32r a4,0x402308d4 ; READ 402308d4
+40230a49  l32r a0,0x402015d4 ; READ 402015d4
+40230a4c  callx0 a0 ; COMPUTED_CALL 40100d20
+40230a4f  mov.n a3,a13 ; PARAM 4025cac0
+40230a51  l32i.n a2,a12,0x34 ; READ 3fff1d24
+40230a53  l32r a4,0x402308d8 ; READ 402308d8
+40230a56  l32r a0,0x402015d4 ; READ 402015d4
+40230a59  callx0 a0 ; COMPUTED_CALL 40100d20
+40230a5c  call0 0x4022d7d4 ; UNCONDITIONAL_CALL 4022d7d4
+40230a5f  j 0x40230947 ; UNCONDITIONAL_JUMP 40230947
+40230a62  movi a4,0x0
+40230a65  movi a3,0x1
+40230a68  movi.n a2,0x0
+40230a6a  s32i.n a2,a1,0x30
+40230a6c  movnez a0,a3,a0
+40230a6f  l32i.n a2,a12,0x34 ; READ 3fff1d24
+40230a71  addi a3,a1,0x30
+40230a74  s8i a0,a12,0x30 ; WRITE 3fff1d20
+40230a77  call0 0x40226bf8 ; UNCONDITIONAL_CALL 40226bf8
+40230a7a  l32i.n a2,a12,0x34 ; READ 3fff1d24
+40230a7c  l8ui a4,a2,0x14
+40230a7f  bnez.n a4,0x40230aab ; CONDITIONAL_JUMP 40230aab
+40230a81  call0 0x40226fec ; UNCONDITIONAL_CALL 40226fec
+40230a84  mov.n a3,a13 ; PARAM 4025cac0
+40230a86  l32i.n a2,a12,0x34 ; READ 3fff1d24
+40230a88  l32r a4,0x402308dc ; READ 402308dc
+40230a8b  l32i.n a2,a2,0x8
+40230a8d  l32r a0,0x402015d4 ; READ 402015d4
+40230a90  callx0 a0 ; COMPUTED_CALL 40100d20
+40230a93  l32i.n a2,a12,0x34 ; READ 3fff1d24
+40230a95  movi.n a4,0x0
+40230a97  mov.n a3,a13 ; PARAM 4025cac0
+40230a99  s32i.n a4,a2,0x8
+40230a9b  l32r a4,0x402308e0 ; READ 402308e0
+40230a9e  l32r a0,0x402015d4 ; READ 402015d4
+40230aa1  callx0 a0 ; COMPUTED_CALL 40100d20
+40230aa4  movi.n a5,0x0
+40230aa6  s32i.n a5,a12,0x34 ; WRITE 3fff1d24
+40230aa8  j 0x40230ae9 ; UNCONDITIONAL_JUMP 40230ae9
+40230aab  movi.n a13,0x0
+40230aad  movi a4,0x4
+40230ab0  l32i a5,a1,0x30
+40230ab3  l32i a2,a2,0x8
+40230ab6  addx2 a3,a13,a13
+40230ab9  slli a6,a3,0x2
+40230abc  s32i.n a6,a1,0x34
+40230abe  addi.n a2,a2,0xc
+40230ac0  addx4 a3,a3,a5
+40230ac3  addi.n a3,a3,0x8
+40230ac5  l32r a0,0x402015d0 ; READ 402015d0
+40230ac8  callx0 a0 ; COMPUTED_CALL 400018b4
+40230acb  l32i.n a8,a1,0x34
+40230acd  l32i.n a7,a1,0x30
+40230acf  l32i.n a2,a12,0x34 ; READ 3fff1d24
+40230ad1  add.n a7,a7,a8
+40230ad3  l32i.n a8,a2,0x8
+40230ad5  l32i.n a7,a7,0x4
+40230ad7  s32i.n a7,a8,0x0
+40230ad9  call0 0x40226d44 ; UNCONDITIONAL_CALL 40226d44
+40230adc  l32i.n a2,a12,0x34 ; READ 3fff1d24
+40230ade  addi.n a13,a13,0x1
+40230ae0  l8ui a9,a2,0x14
+40230ae3  extui a13,a13,0x0,0x8
+40230ae6  bltu a13,a9,0x40230aad ; CONDITIONAL_JUMP 40230aad
+40230ae9  call0 0x4022d7b8 ; UNCONDITIONAL_CALL 4022d7b8
+40230aec  j 0x40230947 ; UNCONDITIONAL_JUMP 40230947
+40230af2  l32r a3,0x4022db34 ; READ 4022db34
+40230af5  movi a4,0x0
+40230af8  l32i a3,a3,0x4 ; READ 3ffe8378
+40230afb  call0 0x40226d04 ; UNCONDITIONAL_CALL 40226d04
+40230afe  beqz.n a2,0x40230b22 ; CONDITIONAL_JUMP 40230b22
+40230b00  mov.n a3,a13 ; PARAM 4025cac0
+40230b02  l32i.n a2,a12,0x34 ; READ 3fff1d24
+40230b04  l32r a4,0x402308e4 ; READ 402308e4
+40230b07  l32i.n a2,a2,0x8
+40230b09  l32r a0,0x402015d4 ; READ 402015d4
+40230b0c  callx0 a0 ; COMPUTED_CALL 40100d20
+40230b0f  mov.n a3,a13 ; PARAM 4025cac0
+40230b11  l32i.n a2,a12,0x34 ; READ 3fff1d24
+40230b13  l32r a4,0x402308e8 ; READ 402308e8
+40230b16  l32r a0,0x402015d4 ; READ 402015d4
+40230b19  callx0 a0 ; COMPUTED_CALL 40100d20
+40230b1c  call0 0x4022d7d4 ; UNCONDITIONAL_CALL 4022d7d4
+40230b1f  j 0x40230947 ; UNCONDITIONAL_JUMP 40230947
+40230b22  l32i.n a3,a1,0x8
+40230b24  movi.n a4,0x1
+40230b26  movnez a3,a4,a3
+40230b29  s8i a3,a12,0x30 ; WRITE 3fff1d20
+40230b2c  j 0x40230ae9 ; UNCONDITIONAL_JUMP 40230ae9
+40230b2f  l32i.n a0,a1,0x0 ; DATA Stack[-0x60]
+40230b31  l32r a5,0x40201f08 ; READ 40201f08
+40230b34  blt a5,a0,0x40230b3d ; CONDITIONAL_JUMP 40230b3d
+40230b37  blti a0,0x1,0x40230b3d ; CONDITIONAL_JUMP 40230b3d
+40230b3a  j 0x402309a5 ; UNCONDITIONAL_JUMP 402309a5
+40230b3d  call0 0x4022d7d4 ; UNCONDITIONAL_CALL 4022d7d4
+40230b40  j 0x40230947 ; UNCONDITIONAL_JUMP 40230947

@@ -1,0 +1,28 @@
+REQUEST 40226ab8
+XREF 4022db86 UNCONDITIONAL_CALL
+FUNCTION 40226ab8 FUN_40226ab8 __call0
+CALLER 4022db86 UNCONDITIONAL_CALL
+
+undefined4 __call0 FUN_40226ab8(uint param_1)
+
+{
+  if ((param_1 != 0) && (param_1 < 0xd)) {
+    memw();
+    *(uint *)(PTR_DAT_40201574 + 1000) = param_1;
+    return 0;
+  }
+  return 0xfffffff4;
+}
+
+
+ASSEMBLY
+40226ab8  beqz.n a2,0x40226abf ; CONDITIONAL_JUMP 40226abf
+40226aba  movi.n a3,0xc
+40226abc  bgeu a3,a2,0x40226ac3 ; CONDITIONAL_JUMP 40226ac3
+40226abf  movi.n a2,0xf4
+40226ac1  ret.n
+40226ac3  l32r a4,0x40201574 ; READ 40201574
+40226ac6  memw
+40226ac9  s32i a2,a4,0x3e8 ; WRITE 600011e8
+40226acc  movi.n a2,0x0
+40226ace  ret.n

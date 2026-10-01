@@ -1,0 +1,89 @@
+REQUEST 40203388
+XREF 402321c4 UNCONDITIONAL_CALL
+XREF 402030df UNCONDITIONAL_CALL
+XREF 40202f13 UNCONDITIONAL_CALL
+XREF 40203908 UNCONDITIONAL_CALL
+XREF 4023217c UNCONDITIONAL_CALL
+XREF 402042c9 UNCONDITIONAL_CALL
+XREF 40203442 UNCONDITIONAL_CALL
+XREF 402040c8 UNCONDITIONAL_CALL
+FUNCTION 40203388 FUN_40203388 __call0
+CALLER 402321c4 UNCONDITIONAL_CALL
+CALLER 402030df UNCONDITIONAL_CALL
+CALLER 40202f13 UNCONDITIONAL_CALL
+CALLER 40203908 UNCONDITIONAL_CALL
+CALLER 4023217c UNCONDITIONAL_CALL
+CALLER 402042c9 UNCONDITIONAL_CALL
+CALLER 40203442 UNCONDITIONAL_CALL
+CALLER 402040c8 UNCONDITIONAL_CALL
+
+undefined4 __call0 FUN_40203388(int param_1,int param_2,int param_3,int param_4)
+
+{
+  undefined4 uVar1;
+  char local_30 [28];
+  int iStack_14;
+  
+  if ((param_3 == 0) || (*(uint *)(*(int *)PTR_DAT_4020157c + 0xc) < (uint)(param_2 + param_4))) {
+    uVar1 = 0;
+  }
+  else {
+    iStack_14 = param_1;
+    (*(code *)PTR_FUN_402015c8)
+              (*(uint *)(*(int *)PTR_DAT_4020157c + 0xc) * (param_1 + 2),local_30,0x1c);
+    local_30[0] = local_30[0] != '\0';
+    (*(code *)PTR_FUN_402015c8)
+              (param_2 + *(int *)(*(int *)PTR_DAT_4020157c + 0xc) *
+                         (iStack_14 + (uint)(byte)local_30[0]),param_3,param_4);
+    uVar1 = 1;
+  }
+  return uVar1;
+}
+
+
+ASSEMBLY
+40203388  addi a1,a1,-0x30
+4020338b  s32i.n a0,a1,0x20
+4020338d  s32i.n a13,a1,0x28
+4020338f  s32i.n a12,a1,0x24
+40203391  s32i.n a14,a1,0x2c
+40203393  mov.n a12,a4
+40203395  mov.n a14,a3
+40203397  mov.n a13,a5
+40203399  beqz.n a4,0x402033a9 ; CONDITIONAL_JUMP 402033a9
+4020339b  l32r a0,0x4020157c ; READ 4020157c
+4020339e  l32i.n a0,a0,0x0 ; READ 3fffc714
+402033a0  s32i.n a2,a1,0x1c
+402033a2  l32i.n a0,a0,0xc
+402033a4  add.n a3,a3,a5
+402033a6  bgeu a0,a3,0x402033ae ; CONDITIONAL_JUMP 402033ae
+402033a9  movi.n a2,0x0
+402033ab  j 0x402033e4 ; UNCONDITIONAL_JUMP 402033e4
+402033ae  mov.n a3,a1
+402033b0  movi.n a4,0x1c
+402033b2  addi.n a2,a2,0x2
+402033b4  mull a2,a0,a2
+402033b7  l32r a0,0x402015c8 ; READ 402015c8
+402033ba  callx0 a0 ; COMPUTED_CALL 401011e8
+402033bd  l32i.n a3,a1,0x1c
+402033bf  movi.n a5,0x1
+402033c1  l32r a2,0x4020157c ; READ 4020157c
+402033c4  l8ui a4,a1,0x0 ; DATA Stack[-0x30]
+402033c7  l32i.n a2,a2,0x0 ; READ 3fffc714
+402033c9  movnez a4,a5,a4
+402033cc  s8i a4,a1,0x0 ; DATA Stack[-0x30]
+402033cf  add.n a3,a3,a4
+402033d1  l32i.n a2,a2,0xc
+402033d3  mov.n a4,a13
+402033d5  mull a2,a2,a3
+402033d8  mov.n a3,a12
+402033da  add.n a2,a14,a2
+402033dc  l32r a0,0x402015c8 ; READ 402015c8
+402033df  callx0 a0 ; COMPUTED_CALL 401011e8
+402033e2  movi.n a2,0x1
+402033e4  l32i.n a12,a1,0x24
+402033e6  l32i.n a13,a1,0x28
+402033e8  l32i.n a14,a1,0x2c
+402033ea  l32i.n a0,a1,0x20
+402033ec  addi a1,a1,0x30
+402033ef  ret.n
